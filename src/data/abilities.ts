@@ -138,7 +138,7 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Nox Nostra', mappedNames: ['nox nostra'], iconUrl: '/images/icons/abilities/Mina/90px-Nox_Nostra.png' },
   ],
   'mirage': [
-    { name: 'Fire Beetles', mappedNames: ['fire beetles'], iconUrl: '/images/icons/abilities/Mirage/mirage_fire_beetles_psd.png' },
+    { name: 'Fire Scarabs', mappedNames: ['fire scarabs', 'fire beetles'], iconUrl: '/images/icons/abilities/Mirage/mirage_fire_beetles_psd.png' },
     { name: 'Sand Phantom', mappedNames: ['sand phantom'], iconUrl: '/images/icons/abilities/Mirage/mirage_sand_phantom_psd.png' },
     { name: 'Tornado', mappedNames: ['tornado'], iconUrl: '/images/icons/abilities/Mirage/mirage_tornado_psd.png' },
     { name: 'Travel', mappedNames: ['teleport', 'travel'], iconUrl: '/images/icons/abilities/Mirage/teleport_icon_psd.png' },
