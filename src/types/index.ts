@@ -27,6 +27,7 @@ export interface GeneralChange {
 }
 
 export interface PatchNotes {
+  id?: string;
   date: string;
   displayDate: string;
   generalChanges: GeneralChange[];

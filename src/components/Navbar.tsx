@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import PatchSelector from './PatchSelector';
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
@@ -44,12 +45,8 @@ export default function Navbar() {
         </div>
 
         {/* Center tag */}
-        <div className="hidden md:flex items-center gap-2">
-          <div className="h-px w-12 bg-gradient-to-r from-transparent to-deadlock-border" />
-          <span className="text-deadlock-muted text-xs font-condensed tracking-widest uppercase">
-            Community Archive
-          </span>
-          <div className="h-px w-12 bg-gradient-to-l from-transparent to-deadlock-border" />
+        <div className="hidden md:flex items-center">
+          <PatchSelector />
         </div>
 
         {/* Right */}

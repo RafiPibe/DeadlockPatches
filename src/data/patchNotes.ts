@@ -1,30 +1,6 @@
 import type { PatchNotes } from '../types';
 
-// All hero card URLs routed through /wiki-img Vite proxy to avoid CORS
-const HERO_CARDS: Record<string, string> = {
-  apollo:       '/wiki-img/images/thumb/0/0f/Apollo_card.png/200px-Apollo_card.png',
-  calico:       '/wiki-img/images/thumb/e/e4/Calico_card.png/200px-Calico_card.png',
-  celeste:      '/wiki-img/images/thumb/9/90/Celeste_card.png/200px-Celeste_card.png',
-  'the-doorman': '/wiki-img/images/thumb/6/6f/The_Doorman_card.png/200px-The_Doorman_card.png',
-  drifter:      '/wiki-img/images/thumb/4/4d/Drifter_card.png/200px-Drifter_card.png',
-  ivy:          '/wiki-img/images/thumb/2/2c/Ivy_card.png/200px-Ivy_card.png',
-  lash:         '/wiki-img/images/thumb/5/5a/Lash_card.png/200px-Lash_card.png',
-  mcginnis:     '/wiki-img/images/thumb/5/55/McGinnis_card.png/200px-McGinnis_card.png',
-  mirage:       '/wiki-img/images/thumb/7/77/Mirage_card.png/200px-Mirage_card.png',
-  'mo-krill':   '/wiki-img/images/thumb/a/a1/Mo_%26_Krill_card.png/200px-Mo_%26_Krill_card.png',
-  paradox:      '/wiki-img/images/thumb/0/08/Paradox_card.png/200px-Paradox_card.png',
-  pocket:       '/wiki-img/images/thumb/0/06/Pocket_card.png/200px-Pocket_card.png',
-  seven:        '/wiki-img/images/thumb/c/cf/Seven_card.png/200px-Seven_card.png',
-  shiv:         '/wiki-img/images/thumb/b/b8/Shiv_card.png/200px-Shiv_card.png',
-  silver:       '/wiki-img/images/thumb/1/1e/Silver_card.png/200px-Silver_card.png',
-  victor:       '/wiki-img/images/thumb/3/3d/Victor_card.png/200px-Victor_card.png',
-  vindicta:     '/wiki-img/images/thumb/6/69/Vindicta_card.png/200px-Vindicta_card.png',
-  viscous:      '/wiki-img/images/thumb/5/53/Viscous_card.png/200px-Viscous_card.png',
-  warden:       '/wiki-img/images/thumb/1/10/Warden_card.png/200px-Warden_card.png',
-  wraith:       '/wiki-img/images/thumb/8/85/Wraith_card.png/200px-Wraith_card.png',
-};
-
-const h = (id: string) => HERO_CARDS[id] ?? '';
+const h = (id: string) => `/images/heroes/${id}.png`;
 
 export const march10_2026: PatchNotes = {
   date: '2026-03-10',
@@ -50,7 +26,7 @@ export const march10_2026: PatchNotes = {
     {
       id: 'golden-goose-egg',
       name: 'Golden Goose Egg',
-      imageUrl: '/wiki-img/images/thumb/a/a8/Golden_Goose_Egg.png/128px-Golden_Goose_Egg.png',
+      imageUrl: '/images/items/golden-goose-egg.png',
       category: 'Spirit',
       changes: [
         { text: 'Souls per buff improved from every 200 souls to every 150', type: 'buff' },
@@ -59,7 +35,7 @@ export const march10_2026: PatchNotes = {
     {
       id: 'vortex-web',
       name: 'Vortex Web',
-      imageUrl: '/wiki-img/images/thumb/d/d6/Vortex_Web.png/128px-Vortex_Web.png',
+      imageUrl: '/images/items/vortex-web.png',
       category: 'Spirit',
       changes: [
         { text: 'Will now only unit target when used with alt cast', type: 'neutral' },

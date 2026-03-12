@@ -12,29 +12,7 @@ interface HeroCardProps {
   index: number;
 }
 
-// Verified fallback URLs in case the primary URL fails
-const FALLBACK_HERO_IMAGES: Record<string, string> = {
-  'apollo':       'https://deadlock.wiki/images/thumb/0/0f/Apollo_card.png/88px-Apollo_card.png',
-  'calico':       'https://deadlock.wiki/images/thumb/e/e4/Calico_card.png/88px-Calico_card.png',
-  'celeste':      'https://deadlock.wiki/images/thumb/9/90/Celeste_card.png/88px-Celeste_card.png',
-  'the-doorman':  'https://deadlock.wiki/images/thumb/6/6f/The_Doorman_card.png/88px-The_Doorman_card.png',
-  'drifter':      'https://deadlock.wiki/images/thumb/4/4d/Drifter_card.png/88px-Drifter_card.png',
-  'ivy':          'https://deadlock.wiki/images/thumb/2/2c/Ivy_card.png/88px-Ivy_card.png',
-  'lash':         'https://deadlock.wiki/images/thumb/5/5a/Lash_card.png/88px-Lash_card.png',
-  'mcginnis':     'https://deadlock.wiki/images/thumb/5/55/McGinnis_card.png/88px-McGinnis_card.png',
-  'mirage':       'https://deadlock.wiki/images/thumb/7/77/Mirage_card.png/88px-Mirage_card.png',
-  'mo-krill':     'https://deadlock.wiki/images/thumb/a/a1/Mo_%26_Krill_card.png/88px-Mo_%26_Krill_card.png',
-  'paradox':      'https://deadlock.wiki/images/thumb/0/08/Paradox_card.png/88px-Paradox_card.png',
-  'pocket':       'https://deadlock.wiki/images/thumb/0/06/Pocket_card.png/88px-Pocket_card.png',
-  'seven':        'https://deadlock.wiki/images/thumb/c/cf/Seven_card.png/88px-Seven_card.png',
-  'shiv':         'https://deadlock.wiki/images/thumb/b/b8/Shiv_card.png/88px-Shiv_card.png',
-  'silver':       'https://deadlock.wiki/images/thumb/1/1e/Silver_card.png/88px-Silver_card.png',
-  'victor':       'https://deadlock.wiki/images/thumb/3/3d/Victor_card.png/88px-Victor_card.png',
-  'vindicta':     'https://deadlock.wiki/images/thumb/6/69/Vindicta_card.png/88px-Vindicta_card.png',
-  'viscous':      'https://deadlock.wiki/images/thumb/5/53/Viscous_card.png/88px-Viscous_card.png',
-  'warden':       'https://deadlock.wiki/images/thumb/1/10/Warden_card.png/88px-Warden_card.png',
-  'wraith':       'https://deadlock.wiki/images/thumb/8/85/Wraith_card.png/88px-Wraith_card.png',
-};
+// No need for external fallback URLs since images are local now.
 
 export default function HeroCard({ hero, index }: HeroCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -65,10 +43,7 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
   const handleImgError = () => {
     if (!imgFailed) {
       setImgFailed(true);
-      const fallback = FALLBACK_HERO_IMAGES[hero.id];
-      if (fallback && fallback !== imgSrc) {
-        setImgSrc(fallback);
-      }
+      setImgSrc(''); // Fall back to text
     }
   };
 
