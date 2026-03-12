@@ -102,10 +102,10 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Concussive Combustion', mappedNames: ['concussive combustion', 'molotov'], iconUrl: '/images/icons/abilities/Infernus/inferno_molotov_psd.png' },
   ],
   'ivy': [
-    { name: 'Kudzu Bomb', mappedNames: ['kudzu bomb', 'stone form'], iconUrl: '/images/icons/abilities/Ivy/tengu_stone_form_psd.png' },
-    { name: 'Watcher\'s Covenant', mappedNames: ['watcher\'s covenant', 'watchers covenant', 'tether'], iconUrl: '/images/icons/abilities/Ivy/tengu_tether_psd.png' },
-    { name: 'Stone Form', mappedNames: ['stone form (old)', 'storm flask'], iconUrl: '/images/icons/abilities/Ivy/tengu_storm_flask_psd.png' },
-    { name: 'Air Drop', mappedNames: ['air drop', 'lightning crash'], iconUrl: '/images/icons/abilities/Ivy/tengu_lightning_crash_psd.png' },
+    { name: 'Entangling Thorns', mappedNames: ['entangling thorns', 'entangling thorn'], iconUrl: '/images/icons/abilities/Ivy/90px-Entangling_Thorns.png' },
+    { name: 'Kudzu Connection', mappedNames: ['kudzu connection'], iconUrl: '/images/icons/abilities/Ivy/90px-Kudzu_Connection.png' },
+    { name: 'Stone Form', mappedNames: ['stone form'], iconUrl: '/images/icons/abilities/Ivy/90px-Stone_Form.png' },
+    { name: 'Air Drop', mappedNames: ['air drop'], iconUrl: '/images/icons/abilities/Ivy/90px-Air_Drop.png' },
   ],
   'kelvin': [
     { name: 'Frost Grenade', mappedNames: ['frost grenade', 'freezing grenade'], iconUrl: '/images/icons/abilities/Kelvin/freezing_grenade_psd.png' },

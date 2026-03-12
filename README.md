@@ -59,7 +59,7 @@ Once the images exist and the dictionary is updated, run the Local Editor to tes
 
 ---
 
-## 🎨 Typography
+## Typography
 
 The ability titles utilize the `Valve Occult` font.
 This requires the physical font file to be present at `public/fonts/valveoracle-semibold.ttf`. 
