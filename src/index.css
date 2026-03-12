@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-deadlock-bg text-deadlock-text font-body;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-deadlock-bg;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-deadlock-border-light rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-deadlock-gold-dark;
+  }
+
+  ::selection {
+    @apply bg-deadlock-gold text-deadlock-bg;
+  }
+}
+
+@layer components {
+  .section-divider {
+    @apply border-b border-deadlock-border mb-8;
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(200, 168, 75, 0.15), 0 0 40px rgba(200, 168, 75, 0.05);
+  }
+
+  .glow-gold-hover:hover {
+    box-shadow: 0 0 20px rgba(200, 168, 75, 0.25), 0 0 60px rgba(200, 168, 75, 0.1);
+  }
+
+  .card-bg {
+    @apply bg-deadlock-bg-card border border-deadlock-border rounded-sm;
+  }
+
+  .hero-card-hover {
+    transition: all 0.3s ease;
+  }
+  .hero-card-hover:hover {
+    @apply border-deadlock-gold-dark;
+    box-shadow: 0 0 20px rgba(200, 168, 75, 0.12), inset 0 0 30px rgba(200, 168, 75, 0.03);
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 0 30px rgba(200, 168, 75, 0.4), 0 2px 4px rgba(0,0,0,0.8);
+  }
+
+  .text-shadow-sm {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  }
+
+  .bg-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+  }
+}
+
+/* Ambient glow animation for header */
+@keyframes ambientPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.ambient-glow {
+  animation: ambientPulse 4s ease-in-out infinite;
+}
+
+/* Category pill colors */
+.pill-weapon {
+  background: rgba(232, 118, 46, 0.15);
+  color: #e8762e;
+  border: 1px solid rgba(232, 118, 46, 0.3);
+}
+.pill-vitality {
+  background: rgba(76, 175, 110, 0.15);
+  color: #4caf6e;
+  border: 1px solid rgba(76, 175, 110, 0.3);
+}
+.pill-spirit {
+  background: rgba(155, 111, 212, 0.15);
+  color: #9b6fd4;
+  border: 1px solid rgba(155, 111, 212, 0.3);
+}
