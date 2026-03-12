@@ -162,7 +162,7 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
                   
                   {/* Ability Info & Changes */}
                   <div className="flex-1 min-w-0 pt-0.5">
-                    <h4 className="font-display font-bold text-[#b4c5d6] text-sm uppercase tracking-wider mb-2">
+                    <h4 className="font-valve font-bold text-[#b4c5d6] text-[17px] uppercase tracking-wide drop-shadow-sm mb-2">
                       {ability.abilityName}
                     </h4>
                     <ul className="space-y-2">

@@ -31,6 +31,7 @@ export default {
         display: ['Rajdhani', 'sans-serif'],
         condensed: ['Barlow Condensed', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
+        valve: ['"Valve Occult"', '"Retail Demo"', '"Open Sans"', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
