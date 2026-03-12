@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import PatchHeader from '../components/PatchHeader';
 import TableOfContents from '../components/TableOfContents';
@@ -12,7 +12,6 @@ import { formatPatchDate } from '../utils/date';
 
 export default function PatchNotesPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [patch, setPatch] = useState<PatchNotes | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
