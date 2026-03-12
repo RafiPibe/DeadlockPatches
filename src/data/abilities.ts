@@ -35,7 +35,7 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Hook', mappedNames: ['hook'], iconUrl: '/images/icons/abilities/Bebop/bebop_hook_psd.png' },
     { name: 'Hyper Beam', mappedNames: ['hyper beam'], iconUrl: '/images/icons/abilities/Bebop/bebop_hyper_beam_psd.png' },
   ],
-  'Billy': [
+  'billy': [
     { name: 'Bashdown', mappedNames: ['bashdown'], iconUrl: '/images/icons/abilities/Billy/90px-Bashdown.png' },
     { name: 'Rising Ram', mappedNames: ['rising ram'], iconUrl: '/images/icons/abilities/Billy/90px-Rising_Ram.png' },
     { name: 'Blasted', mappedNames: ['blasted'], iconUrl: '/images/icons/abilities/Billy/90px-Blasted.png' },
@@ -54,12 +54,12 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Shining Wonder', mappedNames: ['shining wonder'], iconUrl: '/images/icons/abilities/Celeste/90px-Shining_Wonder.png' },
   ],
   'the-doorman': [
-    { name: 'Call Bell', mappedNames: ['call bell'], iconUrl: '/images/icons/abilities/the-doorman/90px-Call_Bell.png' },
-    { name: 'Doorway', mappedNames: ['doorway'], iconUrl: '/images/icons/abilities/the-doorman/90px-Doorway.png' },
-    { name: 'Luggage Cart', mappedNames: ['luggage cart'], iconUrl: '/images/icons/abilities/the-doorman/90px-Luggage_Cart.png' },
-    { name: 'Hotel Guest', mappedNames: ['hotel guest'], iconUrl: '/images/icons/abilities/the-doorman/90px-Hotel_Guest.png' },
+    { name: 'Call Bell', mappedNames: ['call bell'], iconUrl: '/images/icons/abilities/The Doorman/90px-Call_Bell.png' },
+    { name: 'Doorway', mappedNames: ['doorway'], iconUrl: '/images/icons/abilities/The Doorman/90px-Doorway.png' },
+    { name: 'Luggage Cart', mappedNames: ['luggage cart'], iconUrl: '/images/icons/abilities/The Doorman/90px-Luggage_Cart.png' },
+    { name: 'Hotel Guest', mappedNames: ['hotel guest'], iconUrl: '/images/icons/abilities/The Doorman/90px-Hotel_Guest.png' },
   ],
-  'Drifter': [
+  'drifter': [
     { name: 'Rend', mappedNames: ['rend'], iconUrl: '/images/icons/abilities/Drifter/90px-Rend.png' },
     { name: 'Stalker\'s Mark', mappedNames: ['stalker\'s mark'], iconUrl: '/images/icons/abilities/Drifter/90px-Stalker\'s_Mark.png' },
     { name: 'Bloodscent', mappedNames: ['bloodscent'], iconUrl: '/images/icons/abilities/Drifter/90px-Bloodscent.png' },
@@ -167,7 +167,7 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Enchanter\'s Satchel', mappedNames: ['enchanter\'s satchel', 'enchanters satchel', 'plasma flux'], iconUrl: '/images/icons/abilities/Pocket/synth_plasma_flux_psd.png' },
     { name: 'Affliction', mappedNames: ['affliction'], iconUrl: '/images/icons/abilities/Pocket/synth_affliction_psd.png' },
   ],
-  'Rem': [
+  'rem': [
     { name: 'Pillow Toss', mappedNames: ['pillow toss'], iconUrl: '/images/icons/abilities/Rem/90px-Pillow_Toss.png' },
     { name: 'Tag Along', mappedNames: ['tag along'], iconUrl: '/images/icons/abilities/Rem/90px-Tag_Along.png' },
     { name: 'Lil Helpers', mappedNames: ['lil helpers'], iconUrl: '/images/icons/abilities/Rem/90px-Lil_Helpers.png' },
@@ -189,7 +189,7 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Slam Fire', mappedNames: ['slam fire'], iconUrl: '/images/icons/abilities/Silver/90px-Slam_Fire.png' },
     { name: 'Boot Kick', mappedNames: ['boot kick'], iconUrl: '/images/icons/abilities/Silver/90px-Boot_Kick.png' },
     { name: 'Entangling Bola', mappedNames: ['entangling bola'], iconUrl: '/images/icons/abilities/Silver/90px-Entangling_Bola.png' },
-    { name: 'Lycan Curses', mappedNames: ['lycan curses'], iconUrl: '/images/icons/abilities/Silver/90px-Lycan_Curses.png' },
+    { name: 'Lycan Curses', mappedNames: ['lycan curses', 'lycan curse'], iconUrl: '/images/icons/abilities/Silver/90px-Lycan_Curse.png' },
     { name: 'Go For The Throat', mappedNames: ['go for the throat'], iconUrl: '/images/icons/abilities/Silver/90px-Go_For_The_Throat.png' },
     { name: 'Mauling Leap', mappedNames: ['mauling leap'], iconUrl: '/images/icons/abilities/Silver/90px-Mauling_Leap.png' },
     { name: 'Tail Whack', mappedNames: ['tail whack'], iconUrl: '/images/icons/abilities/Silver/90px-Tail_Whack.png' },

@@ -139,6 +139,7 @@ export default function EditorPage() {
             if (!heroEntry) {
               let id = targetName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
               if (targetName.toLowerCase().includes('krill')) id = 'mo-krill';
+              if (id === 'doorman') id = 'the-doorman';
               
               heroEntry = { id, name: targetName, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
               result.heroChanges.push(heroEntry);
@@ -180,6 +181,7 @@ export default function EditorPage() {
         } else if (currentSection === 'heroes') {
           let id = line.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
           if (line.toLowerCase().includes('krill')) id = 'mo-krill';
+          if (id === 'doorman') id = 'the-doorman';
           currentSubHeading = { id, name: line, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
           result.heroChanges.push(currentSubHeading);
         }
