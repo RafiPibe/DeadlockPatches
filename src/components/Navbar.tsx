@@ -51,11 +51,11 @@ export default function Navbar() {
             href="https://forums.playdeadlock.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-deadlock-muted hover:text-deadlock-gold transition-colors text-xs font-condensed tracking-wider uppercase hidden sm:block"
+            className="text-deadlock-muted hover:text-deadlock-gold transition-colors text-xs font-condensed tracking-wider uppercase"
           >
-            Official Forums
+            <span className="hidden sm:inline">Official </span>Forums
           </a>
-          <div className="h-4 w-px bg-deadlock-border hidden sm:block" />
+          <div className="h-4 w-px bg-deadlock-border" />
           <a
             href="https://deadlock.wiki"
             target="_blank"

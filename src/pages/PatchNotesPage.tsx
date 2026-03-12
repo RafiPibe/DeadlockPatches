@@ -16,6 +16,7 @@ export default function PatchNotesPage() {
   const [patch, setPatch] = useState<PatchNotes | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     async function loadPatch() {
@@ -90,30 +91,43 @@ export default function PatchNotesPage() {
         className="border-y border-deadlock-border bg-deadlock-bg-secondary sticky top-14 z-40"
         style={{ background: 'rgba(13,19,32,0.8)', backdropFilter: 'blur(12px)' }}
       >
-        <div className="max-w-[1400px] mx-auto px-6 py-3 flex gap-6 overflow-x-auto">
-          {[
-            { id: 'general', label: 'General' },
-            { id: 'all-heroes', label: 'All Heroes' },
-            { id: 'heroes', label: 'Heroes' },
-            { id: 'items', label: 'Items' },
-          ].map(({ id, label }) => (
-            <button
-              key={id}
-              onClick={() => {
-                const el = document.getElementById(id);
-                if (el) {
-                  const top = el.getBoundingClientRect().top + window.scrollY - 120;
-                  window.scrollTo({ top, behavior: 'smooth' });
-                }
-              }}
-              className="text-deadlock-muted hover:text-deadlock-gold transition-colors text-xs font-condensed font-semibold tracking-widest uppercase whitespace-nowrap border-b border-transparent hover:border-deadlock-gold pb-0.5"
-            >
-              {label}
-            </button>
-          ))}
+        <div className="max-w-[1400px] mx-auto px-6 py-3 flex gap-6 overflow-x-auto items-center">
+          {/* Mobile Hamburger Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="sm:hidden text-deadlock-gold hover:text-white transition-colors p-1"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          {/* Desktop Links */}
+          <div className="hidden sm:flex gap-6">
+            {[
+              { id: 'general', label: 'General' },
+              { id: 'all-heroes', label: 'All Heroes' },
+              { id: 'heroes', label: 'Heroes' },
+              { id: 'items', label: 'Items' },
+            ].map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => {
+                  const el = document.getElementById(id);
+                  if (el) {
+                    const top = el.getBoundingClientRect().top + window.scrollY - 120;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                  }
+                }}
+                className="text-deadlock-muted hover:text-deadlock-gold transition-colors text-xs font-condensed font-semibold tracking-widest uppercase whitespace-nowrap border-b border-transparent hover:border-deadlock-gold pb-0.5"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
 
           {/* Quick Nav Search Bar */}
-          <div className="relative hidden sm:block ml-auto self-center">
+          <div className="relative ml-auto self-center shrink-0">
             <svg
               className="absolute left-2.5 top-1/2 -translate-y-1/2 text-deadlock-muted pointer-events-none"
               width="12"
@@ -130,8 +144,8 @@ export default function PatchNotesPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search heroes, items..."
-              className="bg-black/20 border border-deadlock-border hover:border-deadlock-muted focus:border-deadlock-gold/60 text-white placeholder-deadlock-muted text-xs font-condensed tracking-wide outline-none pl-8 pr-3 py-1.5 w-48 focus:w-60 transition-[width,border-color] duration-300 rounded-sm"
+              placeholder="Search..."
+              className="bg-black/20 border border-deadlock-border hover:border-deadlock-muted focus:border-deadlock-gold/60 text-white placeholder-deadlock-muted text-xs font-condensed tracking-wide outline-none pl-8 pr-3 py-1.5 w-32 focus:w-40 sm:w-48 sm:focus:w-60 transition-[width,border-color] duration-300 rounded-sm"
             />
           </div>
 
@@ -147,8 +161,12 @@ export default function PatchNotesPage() {
       {/* Main content */}
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 w-full flex-1">
         <div className="flex gap-8">
-          {/* Sticky TOC */}
-          <TableOfContents heroChanges={filteredHeroes} />
+          {/* Sticky TOC (Desktop) or Drawer (Mobile) */}
+          <TableOfContents 
+            heroChanges={filteredHeroes} 
+            mobileMenuOpen={mobileMenuOpen}
+            setMobileMenuOpen={setMobileMenuOpen}
+          />
 
           {/* Scrollable content */}
           <main className="flex-1 min-w-0">

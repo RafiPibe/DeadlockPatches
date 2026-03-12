@@ -10,9 +10,11 @@ interface TocSection {
 
 interface TableOfContentsProps {
   heroChanges: HeroChange[];
+  mobileMenuOpen?: boolean;
+  setMobileMenuOpen?: (open: boolean) => void;
 }
 
-export default function TableOfContents({ heroChanges }: TableOfContentsProps) {
+export default function TableOfContents({ heroChanges, mobileMenuOpen, setMobileMenuOpen }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('general');
   const [heroesOpen, setHeroesOpen] = useState(true);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -61,93 +63,138 @@ export default function TableOfContents({ heroChanges }: TableOfContentsProps) {
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 120;
       window.scrollTo({ top, behavior: 'smooth' });
+      if (setMobileMenuOpen) setMobileMenuOpen(false);
     }
   };
 
-  return (
-    <motion.aside
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5, delay: 0.4 }}
-      className="hidden lg:block w-64 shrink-0"
-    >
-      {/* Fixed height: navbar (56px) + quick nav strip (~48px) = 104px + small buffer */}
-      <div className="sticky top-[110px] max-h-[calc(100vh-118px)] overflow-y-auto pr-2 custom-scrollbar">
-        <div className="border border-deadlock-border bg-deadlock-bg-card rounded-sm p-4">
-          <div className="text-deadlock-gold text-[10px] font-condensed font-bold tracking-[0.3em] uppercase mb-4 flex items-center gap-2">
-            <div className="w-3 h-px bg-deadlock-gold" />
-            Contents
-          </div>
-
-          <nav className="space-y-0.5">
-            {sections.map((section) => (
-              <div key={section.id}>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => scrollTo(section.id)}
-                    className={`flex-1 text-left px-2 py-1.5 rounded text-xs font-condensed tracking-wide transition-all duration-200 font-semibold ${
-                      activeId === section.id
-                        ? 'text-deadlock-gold bg-deadlock-gold/8 border-l-2 border-deadlock-gold pl-1.5'
-                        : 'text-deadlock-text-dim hover:text-deadlock-text hover:bg-white/3'
-                    }`}
-                  >
-                    {section.label}
-                  </button>
-                  {/* Collapse toggle for heroes subsection */}
-                  {section.sub && section.sub.length > 0 && (
-                    <button
-                      onClick={() => setHeroesOpen(o => !o)}
-                      className="text-deadlock-muted hover:text-deadlock-gold transition-colors px-1 py-1 flex-shrink-0"
-                      title={heroesOpen ? 'Collapse heroes' : 'Expand heroes'}
-                    >
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="currentColor"
-                        className={`transition-transform duration-200 ${heroesOpen ? '' : '-rotate-90'}`}
-                      >
-                        <path d="M5 7L1 3h8L5 7z" />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-
-                {section.sub && (
-                  <AnimatePresence initial={false}>
-                    {heroesOpen && (
-                      <motion.div
-                        key="heroes-list"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2, ease: 'easeInOut' }}
-                        className="overflow-hidden"
-                      >
-                        <div className="ml-2 border-l border-deadlock-border pl-2 mt-0.5 space-y-0.5">
-                          {section.sub.map((item) => (
-                            <button
-                              key={item.id}
-                              onClick={() => scrollTo(item.id)}
-                              className={`w-full text-left px-2 py-1 rounded text-[11px] font-body transition-all duration-200 ${
-                                activeId === item.id
-                                  ? 'text-deadlock-gold bg-deadlock-gold/8'
-                                  : 'text-deadlock-muted hover:text-deadlock-text-dim'
-                              }`}
-                            >
-                              {item.label}
-                            </button>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
-              </div>
-            ))}
-          </nav>
+  const ContentList = () => (
+    <div className="border border-deadlock-border bg-deadlock-bg-card rounded-sm p-4 h-full">
+      <div className="flex justify-between items-center mb-4">
+        <div className="text-deadlock-gold text-[10px] font-condensed font-bold tracking-[0.3em] uppercase flex items-center gap-2">
+          <div className="w-3 h-px bg-deadlock-gold" />
+          Contents
         </div>
+        
+        {/* Mobile close button */}
+        {setMobileMenuOpen && (
+          <button 
+            onClick={() => setMobileMenuOpen(false)}
+            className="lg:hidden text-deadlock-muted hover:text-white transition-colors"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        )}
       </div>
-    </motion.aside>
+
+      <nav className="space-y-0.5">
+        {sections.map((section) => (
+          <div key={section.id}>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => scrollTo(section.id)}
+                className={`flex-1 text-left px-2 py-1.5 rounded text-xs font-condensed tracking-wide transition-all duration-200 font-semibold ${
+                  activeId === section.id
+                    ? 'text-deadlock-gold bg-deadlock-gold/8 border-l-2 border-deadlock-gold pl-1.5'
+                    : 'text-deadlock-text-dim hover:text-deadlock-text hover:bg-white/3'
+                }`}
+              >
+                {section.label}
+              </button>
+              {section.sub && section.sub.length > 0 && (
+                <button
+                  onClick={() => setHeroesOpen(o => !o)}
+                  className="text-deadlock-muted hover:text-deadlock-gold transition-colors px-1 py-1 flex-shrink-0"
+                >
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="currentColor"
+                    className={`transition-transform duration-200 ${heroesOpen ? '' : '-rotate-90'}`}
+                  >
+                    <path d="M5 7L1 3h8L5 7z" />
+                  </svg>
+                </button>
+              )}
+            </div>
+
+            {section.sub && (
+              <AnimatePresence initial={false}>
+                {heroesOpen && (
+                  <motion.div
+                    key="heroes-list"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="ml-2 border-l border-deadlock-border pl-2 mt-0.5 space-y-0.5">
+                      {section.sub.map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => scrollTo(item.id)}
+                          className={`w-full text-left px-2 py-1 rounded text-[11px] font-body transition-all duration-200 ${
+                            activeId === item.id
+                              ? 'text-deadlock-gold bg-deadlock-gold/8'
+                              : 'text-deadlock-muted hover:text-deadlock-text-dim'
+                          }`}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
+          </div>
+        ))}
+      </nav>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop TOC */}
+      <motion.aside
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="hidden lg:block w-64 shrink-0"
+      >
+        <div className="sticky top-[110px] max-h-[calc(100vh-118px)] overflow-y-auto pr-2 custom-scrollbar">
+          <ContentList />
+        </div>
+      </motion.aside>
+
+      {/* Mobile Backdrop & Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <div className="lg:hidden fixed inset-0 z-50 flex">
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen?.(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            {/* Slide-out Panel */}
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="relative w-[300px] max-w-[80vw] h-full bg-deadlock-bg border-r border-deadlock-border p-4 overflow-y-auto"
+            >
+              <ContentList />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
