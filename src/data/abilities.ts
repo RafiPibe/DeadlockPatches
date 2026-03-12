@@ -4,6 +4,18 @@ export interface AbilityMatch {
   iconUrl: string;
 }
 
+// for adding new abilities or rewrite
+/*
+
+'Hero': [
+    { name: '', mappedNames: [''], iconUrl: '/images/icons/abilities/' },
+    { name: '', mappedNames: [''], iconUrl: '/images/icons/abilities/' },
+    { name: '', mappedNames: [''], iconUrl: '/images/icons/abilities/' },
+    { name: '', mappedNames: [''], iconUrl: '/images/icons/abilities/' },
+  ],
+
+*/
+
 export const heroAbilities: Record<string, AbilityMatch[]> = {
   'abrams': [
     { name: 'Siphon Life', mappedNames: ['siphon life'], iconUrl: '/images/icons/abilities/Abrams/bull_drain_psd.png' },
@@ -11,11 +23,23 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Seismic Impact', mappedNames: ['seismic impact'], iconUrl: '/images/icons/abilities/Abrams/bull_jump_psd.png' },
     { name: 'Infernal Resilience', mappedNames: ['infernal resilience'], iconUrl: '/images/icons/abilities/Abrams/bull_beef_psd.png' },
   ],
+  'apollo': [
+    { name: 'Disengaging Sigil', mappedNames: ['disengaging sigil'], iconUrl: '/images/icons/abilities/Apollo/90px-Disengaging_Sigil.png' },
+    { name: 'Riposte', mappedNames: ['riposte'], iconUrl: '/images/icons/abilities/Apollo/90px-Riposte.png' },
+    { name: 'Flawless Advance', mappedNames: ['flawless advance'], iconUrl: '/images/icons/abilities/Apollo/90px-Flawless_Advance.png' },
+    { name: 'Itani Lo Sahn', mappedNames: ['itani lo sahn'], iconUrl: '/images/icons/abilities/Apollo/90px-Itani_Lo_Sahn.png' },
+  ],
   'bebop': [
     { name: 'Exploding Uppercut', mappedNames: ['exploding uppercut', 'uppercut'], iconUrl: '/images/icons/abilities/Bebop/bebop_uppercut_psd.png' },
     { name: 'Sticky Bomb', mappedNames: ['sticky bomb'], iconUrl: '/images/icons/abilities/Bebop/bebop_sticky_bomb_psd.png' },
     { name: 'Hook', mappedNames: ['hook'], iconUrl: '/images/icons/abilities/Bebop/bebop_hook_psd.png' },
     { name: 'Hyper Beam', mappedNames: ['hyper beam'], iconUrl: '/images/icons/abilities/Bebop/bebop_hyper_beam_psd.png' },
+  ],
+  'Billy': [
+    { name: 'Bashdown', mappedNames: ['bashdown'], iconUrl: '/images/icons/abilities/Billy/90px-Bashdown.png' },
+    { name: 'Rising Ram', mappedNames: ['rising ram'], iconUrl: '/images/icons/abilities/Billy/90px-Rising_Ram.png' },
+    { name: 'Blasted', mappedNames: ['blasted'], iconUrl: '/images/icons/abilities/Billy/90px-Blasted.png' },
+    { name: 'Chain Gang', mappedNames: ['chain gang'], iconUrl: '/images/icons/abilities/Billy/90px-Chain_Gang.png' },
   ],
   'calico': [
     { name: 'Leaping Slash', mappedNames: ['leaping slash', 'dash'], iconUrl: '/images/icons/abilities/Calico/nano_dash_psd.png' },
@@ -23,11 +47,35 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Shadow Pulse', mappedNames: ['shadow pulse'], iconUrl: '/images/icons/abilities/Calico/nano_shadow_pulse_psd.png' },
     { name: 'Cat Form', mappedNames: ['cat form', 'shadow form'], iconUrl: '/images/icons/abilities/Calico/nano_catform_psd.png' },
   ],
+  'celeste': [
+    { name: 'Light Eater', mappedNames: ['light eater'], iconUrl: '/images/icons/abilities/Celeste/90px-Light_Eater.png' },
+    { name: 'Dazzling Trick', mappedNames: ['dazzling trick'], iconUrl: '/images/icons/abilities/Celeste/90px-Dazzling_Trick.png' },
+    { name: 'Radiant Daggers', mappedNames: ['radiant daggers'], iconUrl: '/images/icons/abilities/Celeste/90px-Radiant_Daggers.png' },
+    { name: 'Shining Wonder', mappedNames: ['shining wonder'], iconUrl: '/images/icons/abilities/Celeste/90px-Shining_Wonder.png' },
+  ],
+  'the-doorman': [
+    { name: 'Call Bell', mappedNames: ['call bell'], iconUrl: '/images/icons/abilities/the-doorman/90px-Call_Bell.png' },
+    { name: 'Doorway', mappedNames: ['doorway'], iconUrl: '/images/icons/abilities/the-doorman/90px-Doorway.png' },
+    { name: 'Luggage Cart', mappedNames: ['luggage cart'], iconUrl: '/images/icons/abilities/the-doorman/90px-Luggage_Cart.png' },
+    { name: 'Hotel Guest', mappedNames: ['hotel guest'], iconUrl: '/images/icons/abilities/the-doorman/90px-Hotel_Guest.png' },
+  ],
+  'Drifter': [
+    { name: 'Rend', mappedNames: ['rend'], iconUrl: '/images/icons/abilities/Drifter/90px-Rend.png' },
+    { name: 'Stalker\'s Mark', mappedNames: ['stalker\'s mark'], iconUrl: '/images/icons/abilities/Drifter/90px-Stalker\'s_Mark.png' },
+    { name: 'Bloodscent', mappedNames: ['bloodscent'], iconUrl: '/images/icons/abilities/Drifter/90px-Bloodscent.png' },
+    { name: 'Eternal Night', mappedNames: ['eternal night'], iconUrl: '/images/icons/abilities/Drifter/90px-Eternal_Night.png' },
+  ],
   'dynamo': [
     { name: 'Kinetic Pulse', mappedNames: ['kinetic pulse'], iconUrl: '/images/icons/abilities/Dynamo/sumo_stomp_psd.png' },
     { name: 'Quantum Entanglement', mappedNames: ['quantum entanglement'], iconUrl: '/images/icons/abilities/Dynamo/sumo_quantum_psd.png' },
     { name: 'Healing Aurora', mappedNames: ['healing aurora'], iconUrl: '/images/icons/abilities/Dynamo/sumo_pork_bun_psd.png' },
     { name: 'Singularity', mappedNames: ['singularity'], iconUrl: '/images/icons/abilities/Dynamo/sumo_vacuum_psd.png' },
+  ],
+  'graves': [
+    { name: 'Jar of Dead', mappedNames: ['jar of dead'], iconUrl: '/images/icons/abilities/Graves/90px-Jar_of_Dead.png' },
+    { name: 'Grasping Hands', mappedNames: ['grasping hands'], iconUrl: '/images/icons/abilities/Graves/90px-Grasping_Hands.png' },
+    { name: 'Essence Theft', mappedNames: ['essence theft'], iconUrl: '/images/icons/abilities/Graves/90px-Essence_Theft.png' },
+    { name: 'Borrowed Decree', mappedNames: ['borrowed decree'], iconUrl: '/images/icons/abilities/Graves/90px-Borrowed_Decree.png' },
   ],
   'grey-talon': [
     { name: 'Charged Shot', mappedNames: ['charged shot'], iconUrl: '/images/icons/abilities/Grey Talon/archer_charged_shot_psd.png' },
@@ -83,6 +131,12 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Spectral Wall', mappedNames: ['spectral wall', 'fissure'], iconUrl: '/images/icons/abilities/McGinnis/engineer_fissure_2_psd.png' },
     { name: 'Heavy Barrage', mappedNames: ['heavy barrage', 'rockets'], iconUrl: '/images/icons/abilities/McGinnis/engineer_rockets_psd.png' },
   ],
+  'mina': [
+    { name: 'Rake', mappedNames: ['rake'], iconUrl: '/images/icons/abilities/Mina/90px-Rake.png' },
+    { name: 'Sanguine Retreat', mappedNames: ['sanguine retreat'], iconUrl: '/images/icons/abilities/Mina/90px-Sanguine_Retreat.png' },
+    { name: 'Love Bites', mappedNames: ['love bites'], iconUrl: '/images/icons/abilities/Mina/90px-Love_Bites.png' },
+    { name: 'Nox Nostra', mappedNames: ['nox nostra'], iconUrl: '/images/icons/abilities/Mina/90px-Nox_Nostra.png' },
+  ],
   'mirage': [
     { name: 'Fire Beetles', mappedNames: ['fire beetles'], iconUrl: '/images/icons/abilities/Mirage/mirage_fire_beetles_psd.png' },
     { name: 'Sand Phantom', mappedNames: ['sand phantom'], iconUrl: '/images/icons/abilities/Mirage/mirage_sand_phantom_psd.png' },
@@ -94,6 +148,12 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Burrow', mappedNames: ['burrow', 'spin'], iconUrl: '/images/icons/abilities/Mo & Krill/grappler_spin_psd.png' },
     { name: 'Sand Blast', mappedNames: ['sand blast', 'throw sand'], iconUrl: '/images/icons/abilities/Mo & Krill/grappler_throw_sand_psd.png' },
     { name: 'Combo', mappedNames: ['combo'], iconUrl: '/images/icons/abilities/Mo & Krill/grappler_combo_psd.png' },
+  ],
+  'paige': [
+    { name: 'Bookwyrm', mappedNames: ['bookwyrm'], iconUrl: '/images/icons/abilities/Paige/90px-Bookwyrm.png' },
+    { name: 'Plot Armor', mappedNames: ['plot armor'], iconUrl: '/images/icons/abilities/Paige/90px-Plot_Armor.png' },
+    { name: 'Captivating Read', mappedNames: ['captivating read'], iconUrl: '/images/icons/abilities/Paige/90px-Captivating_Read.png' },
+    { name: 'Rallying Charge', mappedNames: ['rallying charge'], iconUrl: '/images/icons/abilities/Paige/90px-Rallying_Charge.png' },
   ],
   'paradox': [
     { name: 'Pulse Grenade', mappedNames: ['pulse grenade', 'time bomb'], iconUrl: '/images/icons/abilities/Paradox/chrono_time_bomb_psd.png' },
@@ -107,6 +167,12 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Enchanter\'s Satchel', mappedNames: ['enchanter\'s satchel', 'enchanters satchel', 'plasma flux'], iconUrl: '/images/icons/abilities/Pocket/synth_plasma_flux_psd.png' },
     { name: 'Affliction', mappedNames: ['affliction'], iconUrl: '/images/icons/abilities/Pocket/synth_affliction_psd.png' },
   ],
+  'Rem': [
+    { name: 'Pillow Toss', mappedNames: ['pillow toss'], iconUrl: '/images/icons/abilities/Rem/90px-Pillow_Toss.png' },
+    { name: 'Tag Along', mappedNames: ['tag along'], iconUrl: '/images/icons/abilities/Rem/90px-Tag_Along.png' },
+    { name: 'Lil Helpers', mappedNames: ['lil helpers'], iconUrl: '/images/icons/abilities/Rem/90px-Lil_Helpers.png' },
+    { name: 'Naptime', mappedNames: ['naptime'], iconUrl: '/images/icons/abilities/Rem/90px-Naptime.png' },
+  ],
   'seven': [
     { name: 'Lightning Ball', mappedNames: ['lightning ball', 'giga ball'], iconUrl: '/images/icons/abilities/Seven/giga_ball_psd.png' },
     { name: 'Static Charge', mappedNames: ['static charge', 'giga static'], iconUrl: '/images/icons/abilities/Seven/giga_static_psd.png' },
@@ -119,11 +185,32 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Bloodletting', mappedNames: ['bloodletting', 'cheat death'], iconUrl: '/images/icons/abilities/Shiv/rutger_cheat_death_psd.png' },
     { name: 'Killing Blow', mappedNames: ['killing blow'], iconUrl: '/images/icons/abilities/Shiv/shiv_killing_blow_psd.png' },
   ],
+  'silver': [
+    { name: 'Slam Fire', mappedNames: ['slam fire'], iconUrl: '/images/icons/abilities/Silver/90px-Slam_Fire.png' },
+    { name: 'Boot Kick', mappedNames: ['boot kick'], iconUrl: '/images/icons/abilities/Silver/90px-Boot_Kick.png' },
+    { name: 'Entangling Bola', mappedNames: ['entangling bola'], iconUrl: '/images/icons/abilities/Silver/90px-Entangling_Bola.png' },
+    { name: 'Lycan Curses', mappedNames: ['lycan curses'], iconUrl: '/images/icons/abilities/Silver/90px-Lycan_Curses.png' },
+    { name: 'Go For The Throat', mappedNames: ['go for the throat'], iconUrl: '/images/icons/abilities/Silver/90px-Go_For_The_Throat.png' },
+    { name: 'Mauling Leap', mappedNames: ['mauling leap'], iconUrl: '/images/icons/abilities/Silver/90px-Mauling_Leap.png' },
+    { name: 'Tail Whack', mappedNames: ['tail whack'], iconUrl: '/images/icons/abilities/Silver/90px-Tail_Whack.png' },
+  ],
   'sinclair': [
     { name: 'Animal Curse', mappedNames: ['animal curse'], iconUrl: '/images/icons/abilities/Sinclair/magician_animalcurse_psd.png' },
     { name: 'Clone Turret', mappedNames: ['clone turret'], iconUrl: '/images/icons/abilities/Sinclair/magician_cloneturret_psd.png' },
     { name: 'Copy Ult', mappedNames: ['copy ult'], iconUrl: '/images/icons/abilities/Sinclair/magician_copyult_psd.png' },
     { name: 'Magic Bolt', mappedNames: ['magic bolt'], iconUrl: '/images/icons/abilities/Sinclair/magician_magicbolt_psd.png' },
+  ],
+  'venator': [
+    { name: 'Consecrating Grenade', mappedNames: ['consecrating grenade'], iconUrl: '/images/icons/abilities/Venator/90px-Consecrating_Grenade.png' },
+    { name: 'Gutshot', mappedNames: ['gutshot'], iconUrl: '/images/icons/abilities/Venator/90px-Gutshot.png' },
+    { name: 'Hex-Lined Snap Trap', mappedNames: ['hex-lined snap trap'], iconUrl: '/images/icons/abilities/Venator/90px-Hex-Lined_Snap_Trap.png' },
+    { name: 'Ira Domini', mappedNames: ['ira domini'], iconUrl: '/images/icons/abilities/Venator/90px-Ira_Domini.png' },
+  ],
+  'victor': [
+    { name: 'Pain Battery', mappedNames: ['pain battery'], iconUrl: '/images/icons/abilities/Victor/90px-Pain_Battery.png' },
+    { name: 'Jumpstart', mappedNames: ['jumpstart'], iconUrl: '/images/icons/abilities/Victor/90px-Jumpstart.png' },
+    { name: 'Aura of Suffering', mappedNames: ['aura of suffering'], iconUrl: '/images/icons/abilities/Victor/90px-Aura_of_Suffering.png' },
+    { name: 'Shocking Reanimation', mappedNames: ['shocking reanimation'], iconUrl: '/images/icons/abilities/Victor/90px-Shocking_Reanimation.png' },
   ],
   'vindicta': [
     { name: 'Stake', mappedNames: ['stake', 'chain'], iconUrl: '/images/icons/abilities/Vindicta/pestilence_chain_psd.png' },

@@ -21,7 +21,7 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
   const [imgSrc, setImgSrc] = useState(hero.imageUrl);
 
   // name ids use underscores instead of hyphens
-  const nameSvgUrl = `/images/heroes/names/${hero.id.replace(/-/g, '_')}.svg`;
+  const [nameSvgUrl, setNameSvgUrl] = useState(`/images/heroes/names/${hero.id.replace(/-/g, '_')}.svg`);
 
   useEffect(() => {
     const el = cardRef.current;
@@ -51,7 +51,15 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
     }
   };
 
-  const handleNameError = () => setNameFailed(true);
+  const handleNameError = () => {
+    if (nameSvgUrl.endsWith('.svg')) {
+      // First fallback from SVG to PNG
+      setNameSvgUrl(`/images/heroes/names/${hero.id.replace(/-/g, '_')}.png`);
+    } else {
+      // If PNG also fails, fallback to pure text
+      setNameFailed(true);
+    }
+  };
 
   const getCount = (type: string) => 
     hero.changes.filter(c => c.type === type).length + 
