@@ -27,11 +27,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3 flex-shrink-0">
           <div className="relative">
             <div className="w-8 h-8 rounded-sm border border-deadlock-gold/50 flex items-center justify-center bg-deadlock-gold/5">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#c8a84b" strokeWidth="1.5" strokeLinejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="#c8a84b" strokeWidth="1.5" strokeLinejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="#c8a84b" strokeWidth="1.5" strokeLinejoin="round"/>
-              </svg>
+              <img src="/images/logo.svg" alt="Deadlock Logo" className="w-5 h-5 object-contain" />
             </div>
           </div>
           <div>
