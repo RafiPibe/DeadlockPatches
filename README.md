@@ -1,6 +1,6 @@
 # Deadlock Patch Notes Website (yoshi im sorry but I can't read the patch notes on the official forums)
 
-A website to read Deadlock Patch Notes better (you don't really have to squint your eyes).
+A website to read Deadlock Patch Notes better (you don't really have to squint your eyes). This project features a live database to parse, host, and render patch notes using authentic Video Game aesthetic design components (like SVGs, ability icons, and the Valve Occult font).
 
 ## Tech Stack
 * **Vite + React (TypeScript):** Core frontend framework.

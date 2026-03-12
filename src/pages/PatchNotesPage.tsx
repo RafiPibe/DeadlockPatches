@@ -105,7 +105,6 @@ export default function PatchNotesPage() {
           <div className="hidden sm:flex gap-6">
             {[
               { id: 'general', label: 'General' },
-              { id: 'all-heroes', label: 'All Heroes' },
               { id: 'heroes', label: 'Heroes' },
               { id: 'items', label: 'Items' },
             ].map(({ id, label }) => (
@@ -184,7 +183,6 @@ export default function PatchNotesPage() {
             {filteredGeneral.length > 0 && (
               <GeneralSection
                 changes={filteredGeneral}
-                baseChanges={searchQuery ? [] : (patch.heroBaseChanges || [])}
               />
             )}
 

@@ -21,7 +21,6 @@ export default function TableOfContents({ heroChanges, mobileMenuOpen, setMobile
 
   const sections: TocSection[] = [
     { id: 'general', label: 'General' },
-    { id: 'all-heroes', label: 'All Heroes' },
     {
       id: 'heroes',
       label: 'Heroes',

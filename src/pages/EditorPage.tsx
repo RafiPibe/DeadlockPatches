@@ -82,7 +82,6 @@ export default function EditorPage() {
       date: date,
       displayDate: formatPatchDate(date),
       generalChanges: [],
-      heroBaseChanges: [],
       itemChanges: [],
       heroChanges: []
     };
@@ -122,7 +121,7 @@ export default function EditorPage() {
 
         const change = { text: changeText, type: determineType(changeText) };
 
-        if (currentSection === 'general' && !targetName) {
+        if ((currentSection === 'general' || currentSection === 'heroes') && !targetName) {
           result.generalChanges.push(change);
         } else {
           if (currentSection === 'items') {

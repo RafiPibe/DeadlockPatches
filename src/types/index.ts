@@ -38,7 +38,6 @@ export interface PatchNotes {
   date: string;
   displayDate: string;
   generalChanges: GeneralChange[];
-  heroBaseChanges: GeneralChange[];
   itemChanges: ItemChange[];
   heroChanges: HeroChange[];
 }
