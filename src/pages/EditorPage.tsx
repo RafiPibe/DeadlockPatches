@@ -258,7 +258,7 @@ export default function EditorPage() {
               disabled={!rawText}
               className="mt-2 w-full bg-deadlock-bg-secondary border border-deadlock-border hover:border-deadlock-gold text-white font-condensed font-bold tracking-[0.2em] uppercase py-3 transition-colors disabled:opacity-50"
             >
-              Parse Data ⚡
+              Parse Data
             </button>
           </div>
 

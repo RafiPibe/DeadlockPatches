@@ -14,6 +14,7 @@ export default function PatchNotesPage() {
   const navigate = useNavigate();
   const [patch, setPatch] = useState<PatchNotes | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     async function loadPatch() {
@@ -36,6 +37,24 @@ export default function PatchNotesPage() {
     }
     loadPatch();
   }, [id]);
+
+  // Filter heroes and items by search query
+  const filteredHeroes = patch?.heroChanges.filter(h =>
+    h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    h.changes.some(c => c.text.toLowerCase().includes(searchQuery.toLowerCase()))
+  ) ?? [];
+
+  const filteredItems = patch?.itemChanges.filter(item =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.changes.some(c => c.text.toLowerCase().includes(searchQuery.toLowerCase()))
+  ) ?? [];
+
+  // When searching, also filter general changes
+  const filteredGeneral = searchQuery
+    ? (patch?.generalChanges.filter(c =>
+        c.text.toLowerCase().includes(searchQuery.toLowerCase())
+      ) ?? [])
+    : (patch?.generalChanges ?? []);
 
   if (loading) {
     return (
@@ -82,7 +101,7 @@ export default function PatchNotesPage() {
               onClick={() => {
                 const el = document.getElementById(id);
                 if (el) {
-                  const top = el.getBoundingClientRect().top + window.scrollY - 110;
+                  const top = el.getBoundingClientRect().top + window.scrollY - 120;
                   window.scrollTo({ top, behavior: 'smooth' });
                 }
               }}
@@ -91,6 +110,36 @@ export default function PatchNotesPage() {
               {label}
             </button>
           ))}
+
+          {/* Quick Nav Search Bar */}
+          <div className="relative hidden sm:block ml-auto self-center">
+            <svg
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-deadlock-muted pointer-events-none"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search heroes, items..."
+              className="bg-black/20 border border-deadlock-border hover:border-deadlock-muted focus:border-deadlock-gold/60 text-white placeholder-deadlock-muted text-xs font-condensed tracking-wide outline-none pl-8 pr-3 py-1.5 w-48 focus:w-60 transition-[width,border-color] duration-300 rounded-sm"
+            />
+          </div>
+
+          {/* Search results count when filtering */}
+          {searchQuery && (
+            <span className="text-deadlock-gold text-xs font-condensed tracking-wider uppercase opacity-70 whitespace-nowrap self-center">
+              {filteredHeroes.length} heroes · {filteredItems.length} items
+            </span>
+          )}
         </div>
       </div>
 
@@ -98,32 +147,41 @@ export default function PatchNotesPage() {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 w-full flex-1">
         <div className="flex gap-8">
           {/* Sticky TOC */}
-          <TableOfContents heroChanges={patch.heroChanges} />
+          <TableOfContents heroChanges={filteredHeroes} />
 
           {/* Scrollable content */}
           <main className="flex-1 min-w-0">
-            {patch.generalChanges && patch.generalChanges.length > 0 && (
+            {/* No results state */}
+            {searchQuery && filteredHeroes.length === 0 && filteredItems.length === 0 && filteredGeneral.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <p className="text-deadlock-muted font-condensed tracking-widest uppercase text-sm mb-2">
+                  No results for "{searchQuery}"
+                </p>
+                <p className="text-deadlock-muted/50 text-xs font-condensed">
+                  Try a hero name or ability keyword
+                </p>
+              </div>
+            )}
+
+            {filteredGeneral.length > 0 && (
               <GeneralSection
-                changes={patch.generalChanges}
-                baseChanges={patch.heroBaseChanges || []}
+                changes={filteredGeneral}
+                baseChanges={searchQuery ? [] : (patch.heroBaseChanges || [])}
               />
             )}
 
-            {patch.heroChanges && patch.heroChanges.length > 0 && (
-              <HeroSection heroChanges={patch.heroChanges} />
+            {filteredHeroes.length > 0 && (
+              <HeroSection heroChanges={filteredHeroes} />
             )}
 
-            {patch.itemChanges && patch.itemChanges.length > 0 && (
-              <ItemSection itemChanges={patch.itemChanges} />
+            {filteredItems.length > 0 && (
+              <ItemSection itemChanges={filteredItems} />
             )}
 
             {/* Footer */}
             <footer className="border-t border-deadlock-border pt-8 mt-4 text-center">
               <p className="text-deadlock-muted text-xs font-condensed tracking-widest uppercase">
                 Deadlock Patch Notes Archive — Community Fan Project
-              </p>
-              <p className="text-deadlock-muted/50 text-xs mt-1">
-                Hosted via Local JSON-Server
               </p>
             </footer>
           </main>
