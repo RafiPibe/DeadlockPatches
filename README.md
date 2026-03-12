@@ -1,0 +1,1 @@
+Small Project for Deadlock patch notes cus for the love of god I have to squint my eyes to read the patch notes on the official website.
