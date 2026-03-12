@@ -8,6 +8,7 @@ import HeroSection from '../components/HeroSection';
 import ItemSection from '../components/ItemSection';
 import { getPatches, getPatchById } from '../api';
 import { PatchNotes } from '../types';
+import { formatPatchDate } from '../utils/date';
 
 export default function PatchNotesPage() {
   const { id } = useParams();
@@ -82,7 +83,7 @@ export default function PatchNotesPage() {
     <div className="min-h-screen bg-deadlock-bg flex flex-col">
       <Navbar />
 
-      <PatchHeader displayDate={patch.displayDate} />
+      <PatchHeader displayDate={formatPatchDate(patch.date)} />
 
       {/* Quick nav strip */}
       <div

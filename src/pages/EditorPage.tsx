@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import { createPatch, getPatches, deletePatch, updatePatch } from '../api';
 import { ChangeType, PatchNotes } from '../types';
 import { supabase } from '../supabaseClient';
+import { formatPatchDate } from '../utils/date';
 
 // Helper to guess buff/nerf
 function determineType(text: string): ChangeType {
@@ -78,7 +79,7 @@ export default function EditorPage() {
     const result: PatchNotes = {
       id: date,
       date: date,
-      displayDate: date.split('-').reverse().join('-'), // simple MM-DD-YYYY or DD-MM-YYYY formatter
+      displayDate: formatPatchDate(date),
       generalChanges: [],
       heroBaseChanges: [],
       itemChanges: [],
@@ -364,7 +365,7 @@ export default function EditorPage() {
                 <div key={patch.id} className="bg-deadlock-bg-secondary border border-deadlock-border overflow-hidden">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 gap-4">
                     <div>
-                      <h3 className="text-white font-display font-bold text-lg">{patch.displayDate} Update</h3>
+                      <h3 className="text-white font-display font-bold text-lg">{formatPatchDate(patch.date)} Update</h3>
                       <p className="text-deadlock-muted text-xs font-condensed tracking-wider uppercase mt-1">
                         ID: {patch.id} | Changes: {patch.generalChanges.length} Gen / {patch.itemChanges.length} Items / {patch.heroChanges.length} Heroes
                       </p>

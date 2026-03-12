@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPatches } from '../api';
 import { PatchNotes } from '../types';
+import { formatPatchDate } from '../utils/date';
 
 export default function PatchSelector() {
   const [patches, setPatches] = useState<PatchNotes[]>([]);
@@ -36,7 +37,7 @@ export default function PatchSelector() {
         className="flex items-center gap-2 px-3 py-1.5 rounded-sm bg-deadlock-bg-secondary border border-deadlock-border hover:border-deadlock-gold/30 transition-colors"
       >
         <span className="text-sm font-display tracking-wider text-white">
-          {selectedPatch.date === '2026-03-10' ? 'March 10, 2026' : selectedPatch.date}
+          {formatPatchDate(selectedPatch.date)}
         </span>
         <svg 
           width="12" height="12" viewBox="0 0 24 24" fill="none" 
@@ -60,7 +61,7 @@ export default function PatchSelector() {
                 selectedPatch.id === patch.id ? 'text-deadlock-gold' : 'text-deadlock-muted hover:text-white'
               }`}
             >
-              {patch.date === '2026-03-10' ? 'March 10, 2026' : patch.date}
+              {formatPatchDate(patch.date)}
             </button>
           ))}
           <div className="border-t border-deadlock-border my-1"></div>
