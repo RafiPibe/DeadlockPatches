@@ -17,7 +17,11 @@ interface HeroCardProps {
 export default function HeroCard({ hero, index }: HeroCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [imgFailed, setImgFailed] = useState(false);
+  const [nameFailed, setNameFailed] = useState(false);
   const [imgSrc, setImgSrc] = useState(hero.imageUrl);
+
+  // name ids use underscores instead of hyphens
+  const nameSvgUrl = `/images/heroes/names/${hero.id.replace(/-/g, '_')}.svg`;
 
   useEffect(() => {
     const el = cardRef.current;
@@ -47,9 +51,15 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
     }
   };
 
-  const buffCount = hero.changes.filter(c => c.type === 'buff').length;
-  const nerfCount = hero.changes.filter(c => c.type === 'nerf').length;
-  const fixedCount = hero.changes.filter(c => c.type === 'fixed').length;
+  const handleNameError = () => setNameFailed(true);
+
+  const getCount = (type: string) => 
+    hero.changes.filter(c => c.type === type).length + 
+    (hero.abilityChanges?.reduce((acc, a) => acc + a.changes.filter(c => c.type === type).length, 0) || 0);
+
+  const buffCount = getCount('buff');
+  const nerfCount = getCount('nerf');
+  const fixedCount = getCount('fixed');
 
   return (
     <motion.div
@@ -93,10 +103,14 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
         {/* Content */}
         <div className="flex-1 p-4 min-w-0">
           {/* Header row */}
-          <div className="flex items-center justify-between mb-3 gap-2 flex-wrap">
-            <h3 className="font-display font-bold text-white tracking-wide text-lg leading-none">
-              {hero.name}
-            </h3>
+          <div className="flex items-center justify-between mb-4 gap-2 flex-wrap min-h-[30px]">
+            {!nameFailed ? (
+               <img src={nameSvgUrl} alt={hero.name} onError={handleNameError} className="h-6 object-contain" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))' }} />
+            ) : (
+               <h3 className="font-display font-bold text-white tracking-wide text-lg leading-none">
+                 {hero.name}
+               </h3>
+            )}
             <div className="flex items-center gap-1.5 shrink-0">
               {buffCount > 0 && (
                 <span className="text-[10px] font-condensed font-bold text-green-400 bg-green-400/10 border border-green-400/25 px-1.5 py-0.5 rounded">
@@ -116,15 +130,46 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
             </div>
           </div>
 
-          {/* Changes list */}
-          <ul className="space-y-2">
-            {hero.changes.map((change, i) => (
-              <li key={i} className="flex items-start gap-2.5">
-                <ChangeTag type={change.type} />
-                <span className="text-deadlock-text text-sm leading-snug">{change.text}</span>
-              </li>
-            ))}
-          </ul>
+          {/* General non-ability specific changes */}
+          {hero.changes.length > 0 && (
+            <ul className="space-y-2 mb-6">
+              {hero.changes.map((change, i) => (
+                <li key={i} className="flex items-start gap-2.5">
+                  <ChangeTag type={change.type} />
+                  <span className="text-deadlock-text text-sm leading-snug">{change.text}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* Grouped Ability Changes */}
+          {hero.abilityChanges && hero.abilityChanges.length > 0 && (
+            <div className="flex flex-col gap-6 pt-2 border-t border-white/5">
+              {hero.abilityChanges.map((ability, index) => (
+                <div key={index} className="flex gap-4">
+                  {/* Ability Icon */}
+                  <div className="w-12 h-12 shrink-0 bg-black overflow-hidden border border-white/10 shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+                    <img src={ability.iconUrl} alt={ability.abilityName} className="w-full h-full object-cover" />
+                  </div>
+                  
+                  {/* Ability Info & Changes */}
+                  <div className="flex-1 min-w-0 pt-0.5">
+                    <h4 className="font-display font-bold text-[#b4c5d6] text-sm uppercase tracking-wider mb-2">
+                      {ability.abilityName}
+                    </h4>
+                    <ul className="space-y-2">
+                      {ability.changes.map((change, i) => (
+                        <li key={i} className="flex items-start gap-2.5">
+                          <ChangeTag type={change.type} />
+                          <span className="text-deadlock-text text-sm leading-snug">{change.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

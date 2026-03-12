@@ -5,6 +5,7 @@ import { createPatch, getPatches, deletePatch, updatePatch } from '../api';
 import { ChangeType, PatchNotes } from '../types';
 import { supabase } from '../supabaseClient';
 import { formatPatchDate } from '../utils/date';
+import { heroAbilities } from '../data/abilities';
 
 // Helper to guess buff/nerf
 function determineType(text: string): ChangeType {
@@ -141,10 +142,36 @@ export default function EditorPage() {
               // Quick fix for The Doorman
               if (id === 'doorman') id = 'the-doorman';
               
-              heroEntry = { id, name: targetName, imageUrl: `/images/heroes/${id}.png`, changes: [] };
+              heroEntry = { id, name: targetName, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
               result.heroChanges.push(heroEntry);
             }
-            heroEntry.changes.push(change);
+
+            const abilities = heroAbilities[heroEntry.id] || [];
+            const lowerChange = changeText.toLowerCase();
+            let matchedAbility = null;
+
+            for (const ability of abilities) {
+              for (const mapped of ability.mappedNames) {
+                if (lowerChange.includes(mapped)) {
+                  matchedAbility = ability;
+                  break;
+                }
+              }
+              if (matchedAbility) break;
+            }
+
+            if (matchedAbility) {
+              // @ts-ignore
+              let abilityEntry = heroEntry.abilityChanges.find(a => a.abilityName === matchedAbility.name);
+              if (!abilityEntry) {
+                abilityEntry = { abilityName: matchedAbility.name, iconUrl: matchedAbility.iconUrl, changes: [] };
+                // @ts-ignore
+                heroEntry.abilityChanges.push(abilityEntry);
+              }
+              abilityEntry.changes.push(change);
+            } else {
+              heroEntry.changes.push(change);
+            }
           }
         }
       } else {
@@ -156,7 +183,7 @@ export default function EditorPage() {
           let id = line.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
           if (line.toLowerCase().includes('krill')) id = 'mo-krill';
           if (id === 'doorman') id = 'the-doorman';
-          currentSubHeading = { id, name: line, imageUrl: `/images/heroes/${id}.png`, changes: [] };
+          currentSubHeading = { id, name: line, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
           result.heroChanges.push(currentSubHeading);
         }
       }
@@ -325,11 +352,35 @@ export default function EditorPage() {
                       {parsedData.heroChanges.map((hero, i) => (
                         <div key={i} className="mb-3">
                           <span className="font-bold text-white block mb-1">{hero.name}</span>
-                          <ul className="list-disc pl-5 opacity-80 text-xs">
-                            {hero.changes.map((c, j) => (
-                              <li key={j}><span className="font-bold uppercase mr-1 opacity-50">[{c.type}]</span> {c.text}</li>
-                            ))}
-                          </ul>
+                          {/* General base changes */}
+                          {hero.changes.length > 0 && (
+                            <ul className="list-disc pl-5 opacity-80 text-xs mb-2">
+                              {hero.changes.map((c, j) => (
+                                <li key={j}><span className="font-bold uppercase mr-1 opacity-50">[{c.type}]</span> {c.text}</li>
+                              ))}
+                            </ul>
+                          )}
+                          
+                          {/* Ability changes */}
+                          {hero.abilityChanges && hero.abilityChanges.length > 0 && (
+                            <div className="flex flex-col gap-2 mt-2">
+                              {hero.abilityChanges.map((ability, j) => (
+                                <div key={j} className="pl-3 border-l border-deadlock-border">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <div className="w-6 h-6 bg-black rounded overflow-hidden">
+                                      <img src={ability.iconUrl} alt={ability.abilityName} className="w-full h-full object-cover" />
+                                    </div>
+                                    <span className="font-bold text-deadlock-gold text-xs">{ability.abilityName}</span>
+                                  </div>
+                                  <ul className="list-disc pl-5 opacity-80 text-xs mt-1">
+                                    {ability.changes.map((c, k) => (
+                                      <li key={k}><span className="font-bold uppercase mr-1 opacity-50">[{c.type}]</span> {c.text}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

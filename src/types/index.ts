@@ -5,11 +5,18 @@ export interface Change {
   type: ChangeType;
 }
 
+export interface AbilityChange {
+  abilityName: string;
+  iconUrl: string;
+  changes: Change[];
+}
+
 export interface HeroChange {
   id: string;
   name: string;
   imageUrl: string;
   changes: Change[];
+  abilityChanges?: AbilityChange[];
 }
 
 export interface ItemChange {
