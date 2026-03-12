@@ -71,10 +71,10 @@ export default function PatchNotesPage() {
       <div className="min-h-screen bg-deadlock-bg flex flex-col items-center justify-center text-white">
         <h2 className="text-2xl font-display tracking-widest uppercase text-deadlock-gold mb-6">Patch Not Found</h2>
         <button 
-          onClick={() => navigate('/')} 
+          onClick={() => window.location.reload()} 
           className="px-6 py-2 text-sm font-semibold tracking-widest font-condensed uppercase border border-deadlock-border hover:border-deadlock-gold hover:text-deadlock-gold transition-colors"
         >
-          Return Home
+          Refresh
         </button>
       </div>
     );
