@@ -89,7 +89,12 @@ export default function PatchNotesPage() {
     <div className="min-h-screen bg-deadlock-bg flex flex-col">
       <Navbar />
 
-      <PatchHeader displayDate={formatPatchDate(patch.date)} />
+      <PatchHeader 
+        displayDate={formatPatchDate(patch.date)} 
+        heroesCount={patch.heroChanges.length}
+        itemsCount={patch.itemChanges.length}
+        generalCount={patch.generalChanges.length}
+      />
 
       {/* Quick nav strip */}
       <div

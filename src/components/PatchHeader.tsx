@@ -3,9 +3,12 @@ import { gsap } from 'gsap';
 
 interface PatchHeaderProps {
   displayDate: string;
+  heroesCount: number;
+  itemsCount: number;
+  generalCount: number;
 }
 
-export default function PatchHeader({ displayDate }: PatchHeaderProps) {
+export default function PatchHeader({ displayDate, heroesCount, itemsCount, generalCount }: PatchHeaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLDivElement>(null);
@@ -99,9 +102,9 @@ export default function PatchHeader({ displayDate }: PatchHeaderProps) {
         {/* Stats row */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
           {[
-            { label: 'Heroes Changed', value: '20' },
-            { label: 'Items Changed', value: '2' },
-            { label: 'General Changes', value: '10+' },
+            { label: 'Heroes Changed', value: heroesCount },
+            { label: 'Items Changed', value: itemsCount },
+            { label: 'General Changes', value: generalCount > 10 ? `${generalCount}+` : generalCount },
           ].map(({ label, value }) => (
             <div key={label} className="flex flex-col items-center">
               <span className="font-display font-bold text-deadlock-gold text-2xl">{value}</span>
