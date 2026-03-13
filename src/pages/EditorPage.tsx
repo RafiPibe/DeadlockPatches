@@ -6,6 +6,7 @@ import { ChangeType, PatchNotes } from '../types';
 import { supabase } from '../supabaseClient';
 import { formatPatchDate } from '../utils/date';
 import { heroAbilities } from '../data/abilities';
+import { getItemByName } from '../data/items';
 
 // Helper to guess buff/nerf
 function determineType(text: string): ChangeType {
@@ -127,8 +128,16 @@ export default function EditorPage() {
           if (currentSection === 'items') {
             let itemEntry = result.itemChanges.find((i: any) => i.name === targetName);
             if (!itemEntry) {
+              const knownItem = getItemByName(targetName);
               const id = targetName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-              itemEntry = { id, name: targetName, imageUrl: `/images/items/${id}.png`, category: 'Weapon', changes: [] };
+              
+              itemEntry = { 
+                id: knownItem?.id || id, 
+                name: targetName, 
+                imageUrl: knownItem?.imageUrl || `/images/items/${id}.png`, 
+                category: knownItem?.category || 'Weapon', 
+                changes: [] 
+              };
               result.itemChanges.push(itemEntry);
             }
             itemEntry.changes.push(change);
@@ -174,8 +183,15 @@ export default function EditorPage() {
         }
       } else {
         if (currentSection === 'items') {
+          const knownItem = getItemByName(line);
           const id = line.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-          currentSubHeading = { id, name: line, imageUrl: `/images/items/${id}.png`, category: 'Weapon', changes: [] };
+          currentSubHeading = { 
+            id: knownItem?.id || id, 
+            name: line, 
+            imageUrl: knownItem?.imageUrl || `/images/items/${id}.png`, 
+            category: knownItem?.category || 'Weapon', 
+            changes: [] 
+          };
           result.itemChanges.push(currentSubHeading);
         } else if (currentSection === 'heroes') {
           let id = line.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
