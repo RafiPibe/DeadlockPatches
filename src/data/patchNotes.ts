@@ -16,8 +16,6 @@ export const march10_2026: PatchNotes = {
     { text: 'Shrine attack no longer hits heroes standing under it', type: 'buff' },
     { text: 'Super troopers bonus DPS increased from +40% to +60%', type: 'buff' },
     { text: 'Middle Lane troopers now get upgraded when either shrine dies', type: 'neutral' },
-  ],
-  heroBaseChanges: [
     { text: 'Hero base health increased by 40', type: 'buff' },
     { text: 'Hero health growth increased by +4 and 8%', type: 'buff' },
     { text: 'Vitality investment bonuses increased by 12%', type: 'buff' },

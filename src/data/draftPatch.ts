@@ -10,9 +10,6 @@ export const draftPatchNotes: PatchNotes = {
   generalChanges: [
 
   ],
-  heroBaseChanges: [
-    // Move any hero generic changes here manually
-  ],
   itemChanges: [
     {
       id: 'golden-goose-egg',
