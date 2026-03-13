@@ -25,6 +25,16 @@ export default function ItemCard({ item, index }: ItemCardProps) {
   const style = categoryStyle[item.category] ?? categoryStyle.Weapon;
 
   const handleImgError = () => {
+    // Try to recover if it's an old-style path or just broken
+    if (!imgSrc.includes(' (')) {
+      const folder = item.category === 'Weapon' ? 'Weapon (Orange)' : item.category === 'Vitality' ? 'Vitality (Green)' : 'Spirit (Purple)';
+      const guessedPath = `/images/items/${folder}/${item.name.replace(/ /g, '_')}.png`;
+      if (imgSrc !== guessedPath) {
+        setImgSrc(guessedPath);
+        return;
+      }
+    }
+
     if (!imgError) {
       setImgError(true);
       const fallback = FALLBACK_ITEM_IMAGES[item.id];
