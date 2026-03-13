@@ -1,4 +1,5 @@
 import { GamemodeChange } from '../types';
+import ChangeTag from './ChangeTag';
 
 interface GamemodeSectionProps {
   gamemodeChanges: GamemodeChange[];
@@ -28,26 +29,11 @@ export default function GamemodeSection({ gamemodeChanges }: GamemodeSectionProp
             
             <ul className="space-y-3">
               {mode.changes.map((change, j) => (
-                <li key={j} className="flex gap-3 text-sm group/li">
-                  <span 
-                    className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${
-                      change.type === 'buff' ? 'bg-deadlock-green' : 
-                      change.type === 'nerf' ? 'bg-deadlock-red' : 
-                      'bg-deadlock-gold'
-                    }`}
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-gray-300 leading-relaxed font-condensed tracking-wide">
-                      <span className={`font-bold uppercase text-[10px] mr-2 tracking-widest ${
-                        change.type === 'buff' ? 'text-deadlock-green' : 
-                        change.type === 'nerf' ? 'text-deadlock-red' : 
-                        'text-deadlock-muted'
-                      }`}>
-                        [{change.type}]
-                      </span>
-                      {change.text}
-                    </p>
-                  </div>
+                <li key={j} className="flex gap-3 text-sm group/li items-start">
+                  <ChangeTag type={change.type} />
+                  <p className="text-deadlock-text leading-relaxed font-condensed tracking-wide">
+                    {change.text}
+                  </p>
                 </li>
               ))}
             </ul>
