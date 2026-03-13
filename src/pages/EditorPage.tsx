@@ -13,6 +13,7 @@ import { getHeroById } from '../data/heroes';
 function determineType(text: string): ChangeType {
   const lower = text.toLowerCase();
   
+  if (/\b(added new|new)\b/.test(lower)) return 'new';
   if (lower.startsWith('fixed') || /\b(bug|issue)\b/.test(lower)) return 'fixed';
   if (/\bno longer\b/.test(lower)) return 'nerf';
 
@@ -31,8 +32,6 @@ function determineType(text: string): ChangeType {
   if (hasBuff && !hasNerf) {
     return isInverted ? 'nerf' : 'buff';
   }
-
-  if (/\bnew\b/.test(lower)) return 'new';
   
   return 'neutral';
 }
@@ -127,7 +126,12 @@ export default function EditorPage() {
           changeText = textClean.substring(colonIndex + 1).trim();
         }
 
-        const change = { text: changeText, type: determineType(changeText) };
+        // Detect "newness" for items/general
+        const isNew = line.toLowerCase().includes('added new') || line.toLowerCase().includes('new item');
+        const change = { 
+          text: changeText, 
+          type: isNew ? ('new' as const) : determineType(changeText) 
+        };
 
         if ((currentSection === 'general' || currentSection === 'heroes') && !targetName) {
           result.generalChanges.push(change);
@@ -161,7 +165,12 @@ export default function EditorPage() {
               };
               result.itemChanges.push(itemEntry);
             }
-            if (changeText) itemEntry.changes.push(change);
+            
+            if (!changeText && isNew) {
+              itemEntry.changes.push({ text: 'Newly added item', type: 'new' });
+            } else if (changeText) {
+              itemEntry.changes.push(change);
+            }
           } else if (currentSection === 'gamemodes') {
             let modeEntry = result.gamemodeChanges?.find(m => m.name === targetName);
             if (!modeEntry) {

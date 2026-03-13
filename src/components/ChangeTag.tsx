@@ -23,7 +23,7 @@ const tagConfig: Record<ChangeType, { label: string; className: string }> = {
   },
   new: {
     label: 'NEW',
-    className: 'bg-purple-500/10 text-purple-400 border border-purple-500/30',
+    className: 'bg-deadlock-yellow/10 text-deadlock-yellow border border-deadlock-yellow/30',
   },
 };
 
