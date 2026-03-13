@@ -24,7 +24,7 @@ export const march10_2026: PatchNotes = {
     {
       id: 'golden-goose-egg',
       name: 'Golden Goose Egg',
-      imageUrl: '/images/items/golden-goose-egg.png',
+      imageUrl: '/images/items/Spirit (Purple)/Golden_Goose_Egg.png',
       category: 'Spirit',
       changes: [
         { text: 'Souls per buff improved from every 200 souls to every 150', type: 'buff' },
@@ -33,7 +33,7 @@ export const march10_2026: PatchNotes = {
     {
       id: 'vortex-web',
       name: 'Vortex Web',
-      imageUrl: '/images/items/vortex-web.png',
+      imageUrl: '/images/items/Spirit (Purple)/Vortex_Web.png',
       category: 'Spirit',
       changes: [
         { text: 'Will now only unit target when used with alt cast', type: 'neutral' },

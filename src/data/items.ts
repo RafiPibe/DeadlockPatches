@@ -8,9 +8,16 @@ export interface Item {
   tier: 1 | 2 | 3 | 4;
 }
 
-const w = (id: string, name: string, tier: 1 | 2 | 3 | 4): Item => ({ id, name, imageUrl: `/images/items/${id}.png`, category: 'Weapon', tier });
-const v = (id: string, name: string, tier: 1 | 2 | 3 | 4): Item => ({ id, name, imageUrl: `/images/items/${id}.png`, category: 'Vitality', tier });
-const s = (id: string, name: string, tier: 1 | 2 | 3 | 4): Item => ({ id, name, imageUrl: `/images/items/${id}.png`, category: 'Spirit', tier });
+const getFileName = (name: string) => {
+  let cleaned = name.replace(/ /g, '_');
+  if (name === 'Bullet Lifesteal') return 'Bullet_Lifesteal_(item)';
+  if (name === 'Spirit Lifesteal') return 'Spirit_Lifesteal_(item)';
+  return cleaned;
+};
+
+const w = (id: string, name: string, tier: 1 | 2 | 3 | 4): Item => ({ id, name, imageUrl: `/images/items/Weapon (Orange)/${getFileName(name)}.png`, category: 'Weapon', tier });
+const v = (id: string, name: string, tier: 1 | 2 | 3 | 4): Item => ({ id, name, imageUrl: `/images/items/Vitality (Green)/${getFileName(name)}.png`, category: 'Vitality', tier });
+const s = (id: string, name: string, tier: 1 | 2 | 3 | 4): Item => ({ id, name, imageUrl: `/images/items/Spirit (Purple)/${getFileName(name)}.png`, category: 'Spirit', tier });
 
 export const items: Item[] = [
   // Weapon Tier 1

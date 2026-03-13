@@ -134,7 +134,7 @@ export default function EditorPage() {
               itemEntry = { 
                 id: knownItem?.id || id, 
                 name: targetName, 
-                imageUrl: knownItem?.imageUrl || `/images/items/${id}.png`, 
+                imageUrl: knownItem?.imageUrl || `/images/items/Weapon (Orange)/${targetName.replace(/ /g, '_')}.png`, 
                 category: knownItem?.category || 'Weapon', 
                 changes: [] 
               };
@@ -188,7 +188,7 @@ export default function EditorPage() {
           currentSubHeading = { 
             id: knownItem?.id || id, 
             name: line, 
-            imageUrl: knownItem?.imageUrl || `/images/items/${id}.png`, 
+            imageUrl: knownItem?.imageUrl || `/images/items/Weapon (Orange)/${line.replace(/ /g, '_')}.png`, 
             category: knownItem?.category || 'Weapon', 
             changes: [] 
           };
