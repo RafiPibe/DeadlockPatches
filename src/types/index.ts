@@ -27,6 +27,11 @@ export interface ItemChange {
   changes: Change[];
 }
 
+export interface GamemodeChange {
+  name: string;
+  changes: Change[];
+}
+
 export interface GeneralChange {
   text: string;
   type: ChangeType;
@@ -40,4 +45,5 @@ export interface PatchNotes {
   generalChanges: GeneralChange[];
   itemChanges: ItemChange[];
   heroChanges: HeroChange[];
+  gamemodeChanges?: GamemodeChange[];
 }

@@ -7,6 +7,7 @@ import { supabase } from '../supabaseClient';
 import { formatPatchDate } from '../utils/date';
 import { heroAbilities } from '../data/abilities';
 import { getItemByName } from '../data/items';
+import { getHeroById } from '../data/heroes';
 
 // Helper to guess buff/nerf
 function determineType(text: string): ChangeType {
@@ -84,27 +85,33 @@ export default function EditorPage() {
       displayDate: formatPatchDate(date),
       generalChanges: [],
       itemChanges: [],
-      heroChanges: []
+      heroChanges: [],
+      gamemodeChanges: []
     };
 
     let currentSection = 'general';
     let currentSubHeading: any = null;
 
-    for (const line of lines) {
+    lines.forEach(line => {
       if (line.match(/^\[?\s*(?:General|Gameplay)\s*(?:Changes|Updates)?\s*\]?$/i)) {
         currentSection = 'general';
         currentSubHeading = null;
-        continue;
+        return;
       }
       if (line.match(/^\[?\s*Item(?:s)?\s*(?:Changes)?\s*\]?$/i)) {
         currentSection = 'items';
         currentSubHeading = null;
-        continue;
+        return;
       }
       if (line.match(/^\[?\s*Hero(?:es)?\s*(?:Changes)?\s*\]?$/i)) {
         currentSection = 'heroes';
         currentSubHeading = null;
-        continue;
+        return;
+      }
+      if (line.match(/^\[?\s*Gamemode(?:s)?\s*(?:Changes)?\s*\]?$/i)) {
+        currentSection = 'gamemodes';
+        currentSubHeading = null;
+        return;
       }
 
       const isBullet = line.startsWith('-') || line.startsWith('•') || line.startsWith('*');
@@ -126,6 +133,20 @@ export default function EditorPage() {
           result.generalChanges.push(change);
         } else {
           if (currentSection === 'items') {
+            // Check if bullet itself is just a known item name (pivot case)
+            const strippedTagText = changeText.replace(/^\[.*?\]\s*/i, '').trim();
+            const knownMatch = getItemByName(strippedTagText);
+            
+            if (knownMatch && (colonIndex === -1 || (targetName && targetName.toLowerCase().includes('added new')))) {
+              targetName = knownMatch.name;
+              changeText = '';
+            }
+
+            if (!targetName || (targetName.toLowerCase().includes('added new') && !knownMatch)) {
+               result.generalChanges.push(change);
+               return;
+            }
+
             let itemEntry = result.itemChanges.find((i: any) => i.name === targetName);
             if (!itemEntry) {
               const knownItem = getItemByName(targetName);
@@ -140,26 +161,45 @@ export default function EditorPage() {
               };
               result.itemChanges.push(itemEntry);
             }
-            itemEntry.changes.push(change);
-          } else {
-             // Hero
-            let heroEntry = result.heroChanges.find((h: any) => h.name === targetName);
-            if (!heroEntry) {
-              let id = targetName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-              if (targetName.toLowerCase().includes('krill')) id = 'mo-krill';
-              if (id === 'doorman') id = 'the-doorman';
-              
-              heroEntry = { id, name: targetName, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
-              result.heroChanges.push(heroEntry);
+            if (changeText) itemEntry.changes.push(change);
+          } else if (currentSection === 'gamemodes') {
+            let modeEntry = result.gamemodeChanges?.find(m => m.name === targetName);
+            if (!modeEntry) {
+              modeEntry = { name: targetName || 'Unknown Mode', changes: [] };
+              result.gamemodeChanges?.push(modeEntry);
             }
+            modeEntry.changes.push(change);
+          } else {
+            // Hero strict check
+            let heroEntry = null;
+            let id = targetName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            if (targetName.toLowerCase().includes('krill')) id = 'mo-krill';
+            if (id === 'doorman') id = 'the-doorman';
+
+            if (getHeroById(id)) {
+              heroEntry = result.heroChanges.find((h: any) => h.id === id);
+              if (!heroEntry) {
+                heroEntry = { id, name: targetName, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
+                result.heroChanges.push(heroEntry);
+              }
+              currentSubHeading = heroEntry;
+            } else {
+              heroEntry = currentSubHeading;
+              if (!heroEntry && result.heroChanges.length > 0) {
+                heroEntry = result.heroChanges[result.heroChanges.length - 1];
+              }
+            }
+
+            if (!heroEntry) return;
 
             const abilities = heroAbilities[heroEntry.id] || [];
             const lowerChange = changeText.toLowerCase();
+            const lowerTarget = targetName ? targetName.toLowerCase() : '';
             let matchedAbility = null;
 
             for (const ability of abilities) {
               for (const mapped of ability.mappedNames) {
-                if (lowerChange.includes(mapped)) {
+                if (lowerChange.includes(mapped) || lowerTarget.includes(mapped)) {
                   matchedAbility = ability;
                   break;
                 }
@@ -175,9 +215,25 @@ export default function EditorPage() {
                 // @ts-ignore
                 heroEntry.abilityChanges.push(abilityEntry);
               }
-              abilityEntry.changes.push(change);
+
+              // Construct final text: include targetName if it's NOT the ability name
+              // Example: "Spades: +70% Damage" instead of just "+70% Damage"
+              let finalText = changeText;
+              if (targetName && targetName.toLowerCase() !== matchedAbility.name.toLowerCase() && 
+                  targetName.toLowerCase() !== heroEntry.name.toLowerCase()) {
+                finalText = `${targetName}: ${changeText}`;
+              }
+              
+              if (changeText) {
+                abilityEntry.changes.push({ text: finalText, type: determineType(changeText) });
+              }
             } else {
-              heroEntry.changes.push(change);
+              // If no matched ability, use the full targetName + changeText if available
+              let finalText = changeText;
+              if (targetName && targetName.toLowerCase() !== heroEntry.name.toLowerCase()) {
+                finalText = `${targetName}: ${changeText}`;
+              }
+              if (changeText) heroEntry.changes.push({ text: finalText, type: determineType(changeText) });
             }
           }
         }
@@ -197,11 +253,20 @@ export default function EditorPage() {
           let id = line.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
           if (line.toLowerCase().includes('krill')) id = 'mo-krill';
           if (id === 'doorman') id = 'the-doorman';
-          currentSubHeading = { id, name: line, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
-          result.heroChanges.push(currentSubHeading);
+          
+          if (getHeroById(id)) {
+            currentSubHeading = { id, name: line, imageUrl: `/images/heroes/${id}.png`, changes: [], abilityChanges: [] };
+            result.heroChanges.push(currentSubHeading);
+          } else if (currentSubHeading && currentSection === 'heroes') {
+            // Not a hero, but we have a current hero section. Add as a neutral change.
+            currentSubHeading.changes.push({ type: 'neutral', text: line });
+          }
+        } else if (currentSection === 'gamemodes') {
+          currentSubHeading = { name: line, changes: [] };
+          result.gamemodeChanges?.push(currentSubHeading);
         }
       }
-    }
+    });
 
     setParsedData(result);
   };
@@ -316,14 +381,16 @@ export default function EditorPage() {
               ) : (
                 <div className="flex flex-col gap-6 text-sm text-gray-300">
                   {/* General */}
-                  <div>
-                    <h3 className="text-deadlock-gold font-display font-bold uppercase tracking-wider mb-2">General Changes ({parsedData.generalChanges.length})</h3>
-                    <ul className="list-disc pl-5 opacity-80">
-                      {parsedData.generalChanges.map((c, i) => (
-                        <li key={i}><span className="text-xs font-bold uppercase mr-2 opacity-50">[{c.type}]</span> {c.text}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  {parsedData.generalChanges.length > 0 && (
+                    <div>
+                      <h3 className="text-deadlock-gold font-display font-bold uppercase tracking-wider mb-2">General Changes ({parsedData.generalChanges.length})</h3>
+                      <ul className="list-disc pl-5 opacity-80">
+                        {parsedData.generalChanges.map((c, i) => (
+                          <li key={i}><span className="text-xs font-bold uppercase mr-2 opacity-50">[{c.type}]</span> {c.text}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Items */}
                   {parsedData.itemChanges.length > 0 && (
@@ -331,9 +398,31 @@ export default function EditorPage() {
                       <h3 className="text-deadlock-gold font-display font-bold uppercase tracking-wider mb-2">Items ({parsedData.itemChanges.length})</h3>
                       <div className="flex flex-col gap-3">
                         {parsedData.itemChanges.map((item, i) => (
-                          <div key={i} className="pl-3 border-l-2 border-deadlock-border">
-                            <div className="flex items-center gap-3 mb-1">
-                              <span className="font-bold text-white max-w-[120px] truncate">{item.name}</span>
+                          <div key={i} className="pl-3 border-l-2 border-deadlock-border py-1">
+                            <div className="flex items-center gap-3 mb-2 flex-wrap">
+                              {/* Item Icon */}
+                              <div className="w-8 h-8 bg-black/40 border border-deadlock-border rounded shrink-0 flex items-center justify-center p-1">
+                                <img 
+                                  src={item.imageUrl} 
+                                  alt="" 
+                                  className="w-full h-full object-contain opacity-90"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2330363d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Ccircle cx="12" cy="12" r="10"%3E%3C/circle%3E%3C/svg%3E';
+                                  }}
+                                />
+                              </div>
+
+                              <div className="flex flex-col">
+                                <span className="font-bold text-white text-sm">{item.name}</span>
+                                {!!getItemByName(item.name) ? (
+                                  <span className="text-[9px] text-deadlock-green font-bold uppercase tracking-wider flex items-center gap-1">
+                                    <span className="w-1 h-1 bg-current rounded-full" /> Matched
+                                  </span>
+                                ) : (
+                                  <span className="text-[9px] text-deadlock-muted font-bold uppercase tracking-wider italic">Unlocked Item</span>
+                                )}
+                              </div>
+                              
                               <select 
                                 value={item.category}
                                 onChange={(e) => {
@@ -341,7 +430,7 @@ export default function EditorPage() {
                                   newData.itemChanges[i].category = e.target.value as any;
                                   setParsedData(newData);
                                 }}
-                                className="bg-[#0a0f18] border border-deadlock-border px-2 py-1 text-xs outline-none focus:border-deadlock-gold cursor-pointer"
+                                className="bg-[#0a0f18] border border-deadlock-border px-2 py-1 text-[10px] outline-none focus:border-deadlock-gold cursor-pointer ml-auto font-condensed tracking-wider uppercase"
                               >
                                 <option value="Weapon">Weapon (Orange)</option>
                                 <option value="Vitality">Vitality (Green)</option>
@@ -395,6 +484,23 @@ export default function EditorPage() {
                               ))}
                             </div>
                           )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Gamemodes */}
+                  {parsedData.gamemodeChanges && parsedData.gamemodeChanges.length > 0 && (
+                    <div>
+                      <h3 className="text-deadlock-gold font-display font-bold uppercase tracking-wider mb-2">Gamemodes ({parsedData.gamemodeChanges.length})</h3>
+                      {parsedData.gamemodeChanges.map((mode, i) => (
+                        <div key={i} className="mb-3 pl-3 border-l-2 border-deadlock-border py-1">
+                          <span className="font-bold text-white block mb-1">{mode.name}</span>
+                          <ul className="list-disc pl-5 opacity-80 text-xs">
+                            {mode.changes.map((c, j) => (
+                              <li key={j}><span className="font-bold uppercase mr-1 opacity-50">[{c.type}]</span> {c.text}</li>
+                            ))}
+                          </ul>
                         </div>
                       ))}
                     </div>

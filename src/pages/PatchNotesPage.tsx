@@ -6,6 +6,7 @@ import TableOfContents from '../components/TableOfContents';
 import GeneralSection from '../components/GeneralSection';
 import HeroSection from '../components/HeroSection';
 import ItemSection from '../components/ItemSection';
+import GamemodeSection from '../components/GamemodeSection';
 import { getPatches, getPatchById } from '../api';
 import { PatchNotes } from '../types';
 import { formatPatchDate } from '../utils/date';
@@ -48,6 +49,11 @@ export default function PatchNotesPage() {
   const filteredItems = patch?.itemChanges.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.changes.some(c => c.text.toLowerCase().includes(searchQuery.toLowerCase()))
+  ) ?? [];
+
+  const filteredGamemodes = patch?.gamemodeChanges?.filter(mode =>
+    mode.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    mode.changes.some(c => c.text.toLowerCase().includes(searchQuery.toLowerCase()))
   ) ?? [];
 
   // When searching, also filter general changes
@@ -105,6 +111,7 @@ export default function PatchNotesPage() {
           <div className="hidden sm:flex gap-6">
             {[
               { id: 'general', label: 'General' },
+              { id: 'gamemodes', label: 'Gamemode' },
               { id: 'heroes', label: 'Heroes' },
               { id: 'items', label: 'Items' },
             ].map(({ id, label }) => (
@@ -150,7 +157,7 @@ export default function PatchNotesPage() {
           {/* Search results count when filtering */}
           {searchQuery && (
             <span className="text-deadlock-gold text-xs font-condensed tracking-wider uppercase opacity-70 whitespace-nowrap self-center">
-              {filteredHeroes.length} heroes · {filteredItems.length} items
+              {filteredHeroes.length} heroes · {filteredItems.length} items · {filteredGamemodes.length} modes
             </span>
           )}
         </div>
@@ -169,7 +176,7 @@ export default function PatchNotesPage() {
           {/* Scrollable content */}
           <main className="flex-1 min-w-0">
             {/* No results state */}
-            {searchQuery && filteredHeroes.length === 0 && filteredItems.length === 0 && filteredGeneral.length === 0 && (
+            {searchQuery && filteredHeroes.length === 0 && filteredItems.length === 0 && filteredGeneral.length === 0 && filteredGamemodes.length === 0 && (
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <p className="text-deadlock-muted font-condensed tracking-widest uppercase text-sm mb-2">
                   No results for "{searchQuery}"
@@ -184,6 +191,10 @@ export default function PatchNotesPage() {
               <GeneralSection
                 changes={filteredGeneral}
               />
+            )}
+
+            {filteredGamemodes.length > 0 && (
+              <GamemodeSection gamemodeChanges={filteredGamemodes} />
             )}
 
             {filteredHeroes.length > 0 && (

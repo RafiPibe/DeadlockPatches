@@ -18,10 +18,10 @@ export interface AbilityMatch {
 
 export const heroAbilities: Record<string, AbilityMatch[]> = {
   'abrams': [
-    { name: 'Siphon Life', mappedNames: ['siphon life'], iconUrl: '/images/icons/abilities/90px-Siphon_Life.png' },
-    { name: 'Shoulder Charge', mappedNames: ['shoulder charge'], iconUrl: '/images/icons/abilities/90px-Shoulder_Charge.png' },
-    { name: 'Seismic Impact', mappedNames: ['seismic impact'], iconUrl: '/images/icons/abilities/90px-Seismic_Impact.png' },
-    { name: 'Infernal Resilience', mappedNames: ['infernal resilience'], iconUrl: '/images/icons/abilities/90px-Infernal_Resilience.png' },
+    { name: 'Siphon Life', mappedNames: ['siphon life'], iconUrl: '/images/icons/abilities/Abrams/90px-Siphon_Life.png' },
+    { name: 'Shoulder Charge', mappedNames: ['shoulder charge'], iconUrl: '/images/icons/abilities/Abrams/90px-Shoulder_Charge.png' },
+    { name: 'Seismic Impact', mappedNames: ['seismic impact'], iconUrl: '/images/icons/abilities/Abrams/90px-Seismic_Impact.png' },
+    { name: 'Infernal Resilience', mappedNames: ['infernal resilience'], iconUrl: '/images/icons/abilities/Abrams/90px-Infernal_Resilience.png' },
   ],
   'apollo': [
     { name: 'Disengaging Sigil', mappedNames: ['disengaging sigil'], iconUrl: '/images/icons/abilities/Apollo/90px-Disengaging_Sigil.png' },
@@ -237,7 +237,7 @@ export const heroAbilities: Record<string, AbilityMatch[]> = {
     { name: 'Last Stand', mappedNames: ['last stand', 'riot protocol'], iconUrl: '/images/icons/abilities/Warden/90px-Last_Stand.png' },
   ],
   'wraith': [
-    { name: 'Card Trick', mappedNames: ['card trick', 'spade', 'heart'], iconUrl: '/images/icons/abilities/Wraith/90px-Card_Trick.png' },
+    { name: 'Card Trick', mappedNames: ['card trick', 'spade', 'heart', 'diamond', 'club', 'joker', 'card types'], iconUrl: '/images/icons/abilities/Wraith/90px-Card_Trick.png' },
     { name: 'Project Mind', mappedNames: ['project mind', 'teleport'], iconUrl: '/images/icons/abilities/Wraith/90px-Project_Mind.png' },
     { name: 'Full Auto', mappedNames: ['full auto', 'aura'], iconUrl: '/images/icons/abilities/Wraith/90px-Full_Auto.png' },
     { name: 'Telekinesis', mappedNames: ['telekinesis', 'lift'], iconUrl: '/images/icons/abilities/Wraith/90px-Telekinesis.png' },

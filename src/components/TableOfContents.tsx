@@ -21,6 +21,7 @@ export default function TableOfContents({ heroChanges, mobileMenuOpen, setMobile
 
   const sections: TocSection[] = [
     { id: 'general', label: 'General' },
+    { id: 'gamemodes', label: 'Gamemode' },
     {
       id: 'heroes',
       label: 'Heroes',
@@ -32,6 +33,7 @@ export default function TableOfContents({ heroChanges, mobileMenuOpen, setMobile
   useEffect(() => {
     const allIds = [
       'general',
+      'gamemodes',
       'all-heroes',
       'heroes',
       ...heroChanges.map(h => `hero-${h.id}`),
