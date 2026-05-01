@@ -135,18 +135,32 @@ export default function EditorPage() {
 
         if ((currentSection === 'general' || currentSection === 'heroes') && !targetName) {
           result.generalChanges.push(change);
-        } else {
-          if (currentSection === 'items') {
+        } else if (currentSection === 'items') {
+            // Check if "Added new item: ItemName" pattern — extract real item name from value after colon
+            const isAddedNewPrefix = targetName && /added new/i.test(targetName);
+            if (isAddedNewPrefix && changeText) {
+              // changeText holds the item name (after the colon)
+              const newItemMatch = getItemByName(changeText.trim());
+              if (newItemMatch) {
+                targetName = newItemMatch.name;
+                changeText = '';
+              } else {
+                // Unknown new item name — still create entry with the name
+                targetName = changeText.trim();
+                changeText = '';
+              }
+            }
+
             // Check if bullet itself is just a known item name (pivot case)
             const strippedTagText = changeText.replace(/^\[.*?\]\s*/i, '').trim();
             const knownMatch = getItemByName(strippedTagText);
             
-            if (knownMatch && (colonIndex === -1 || (targetName && targetName.toLowerCase().includes('added new')))) {
+            if (knownMatch && colonIndex === -1) {
               targetName = knownMatch.name;
               changeText = '';
             }
 
-            if (!targetName || (targetName.toLowerCase().includes('added new') && !knownMatch)) {
+            if (!targetName) {
                result.generalChanges.push(change);
                return;
             }
