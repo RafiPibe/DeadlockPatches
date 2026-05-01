@@ -135,7 +135,8 @@ export default function EditorPage() {
 
         if ((currentSection === 'general' || currentSection === 'heroes') && !targetName) {
           result.generalChanges.push(change);
-        } else if (currentSection === 'items') {
+        } else {
+          if (currentSection === 'items') {
             // Check if "Added new item: ItemName" pattern — extract real item name from value after colon
             const isAddedNewPrefix = targetName && /added new/i.test(targetName);
             if (isAddedNewPrefix && changeText) {

@@ -225,5 +225,15 @@ export const items: Item[] = [
 
 ];
 
-export const getItemByName = (name: string) =>
-  items.find(i => i.name.toLowerCase() === name.toLowerCase());
+// Collapse any run of the same letter down to one, for fuzzy matching
+const normalize = (s: string) => s.toLowerCase().replace(/(.)\1+/g, '$1');
+
+export const getItemByName = (name: string): Item | undefined => {
+  const lower = name.toLowerCase();
+  // 1. Exact case-insensitive match
+  const exact = items.find(i => i.name.toLowerCase() === lower);
+  if (exact) return exact;
+  // 2. Fuzzy: collapse doubled letters (handles typos like "Supressor" vs "Suppressor")
+  const normInput = normalize(name);
+  return items.find(i => normalize(i.name) === normInput);
+};
