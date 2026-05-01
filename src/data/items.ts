@@ -136,6 +136,7 @@ export const items: Item[] = [
   v('divine-barrier', 'Divine Barrier', 4),
   v('diviners-kevlar', "Diviner's Kevlar", 4),
   v('healing-tempo', 'Healing Tempo', 4),
+  v('indomitable', 'Indomitable', 4),
   v('infuser', 'Infuser', 4),
   v('inhibitor', 'Inhibitor', 4),
   v('juggernaut', 'Juggernaut', 4),
