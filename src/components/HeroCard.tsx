@@ -79,7 +79,7 @@ export default function HeroCard({ hero, index }: HeroCardProps) {
     >
       <div className="flex">
         {/* Hero portrait */}
-        <div className="relative shrink-0 w-24 sm:w-32 overflow-hidden" style={{ minHeight: '120px' }}>
+        <div className="relative shrink-0 w-24 sm:w-32 h-36 overflow-hidden">
           {imgSrc ? (
             <img
               src={imgSrc}
