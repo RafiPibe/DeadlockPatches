@@ -23,7 +23,7 @@ export default function GamemodeSection({ gamemodeChanges }: GamemodeSectionProp
             key={i} 
             className="group bg-deadlock-bg-secondary border border-deadlock-border p-6 hover:border-deadlock-gold/30 transition-all duration-300"
           >
-            <h3 className="text-lg font-display font-bold text-white uppercase tracking-wider mb-4 border-b border-deadlock-border pb-2 group-hover:text-deadlock-gold transition-colors">
+            <h3 className="text-sm font-bold text-deadlock-gold uppercase tracking-widest mb-4 border-b border-deadlock-border pb-2">
               {mode.name}
             </h3>
             
@@ -31,7 +31,7 @@ export default function GamemodeSection({ gamemodeChanges }: GamemodeSectionProp
               {mode.changes.map((change, j) => (
                 <li key={j} className="flex gap-3 text-sm group/li items-start">
                   <ChangeTag type={change.type} />
-                  <p className="text-deadlock-text leading-relaxed font-condensed tracking-wide">
+                  <p className="text-deadlock-text text-sm leading-snug">
                     {change.text}
                   </p>
                 </li>
